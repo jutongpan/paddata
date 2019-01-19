@@ -5,9 +5,9 @@ library(DBI)
 library(RSQLite)
 library(stringr)
 
-setwd("C:/Users/Jutong/Documents/padmonster")
+setwd("C:/Users/Jutong/Documents/paddata")
 
-con <- dbConnect(SQLite(), "db/padmonster.sqlite3")
+con <- dbConnect(SQLite(), "padmonster.sqlite3")
 for (table in dbListTables(con)) {
   assign(paste0(table, ".dt"), setDT(dbReadTable(con, table)))
 }
@@ -28,8 +28,7 @@ ifEmptythenNA <- function(x) {
 
 readMonsterPage <- function(MonsterId) {
   webpage <- tryCatch(
-      # read_html(paste0("http://pad.skyozora.com/pets/", MonsterId)),
-      read_html(paste0("C:/Users/Jutong/Documents/HTMLs/", MonsterId, ".html")),
+      read_html(paste0("HTMLs/", MonsterId, ".html")),
       error = function(e) NA
     )
   if (is.na(webpage)) return(NA)
@@ -39,7 +38,7 @@ readMonsterPage <- function(MonsterId) {
   webpage
 }
 
-id.vt <- 1:5044
+id.vt <- 1:5074
 webpage.ls <- pblapply(id.vt, readMonsterPage)
 names(webpage.ls) <- id.vt
 webpage.ls[is.na(webpage.ls)] <- NULL
@@ -71,7 +70,7 @@ parseMonData <- function(webpage) {
     sub(pattern = "副屬性:(.)", replacement = "\\1")
   SubAtt <- ifEmptythenNA(SubAtt)
 
-  alltypes <- c("神", "龍", "惡魔", "平衡", "攻擊", "體力", "回復", "機械", "進化用", "強化合成用", "能力覺醒用", "販賣用")
+  alltypes <- Type.dt$TypeName
 
   Type <- titles %>%
     grep(pattern = paste(paste0("^", alltypes, "$"), collapse = "|"), value = T)
@@ -208,7 +207,13 @@ ActiveSkill2.dt[, ActiveSkillId := .I]
 
 ActiveSkillType2.dt <- merge(
     ActiveSkill.dt[, c("ActiveSkillId", "ActiveSkillName")],
-    ActiveSkillType.dt[, c("ActiveSkillName", "ActiveSkillType")],
+    ActiveSkillType.dt[, c("ActiveSkillId", "ActiveSkillType")],
+    by = "ActiveSkillId"
+  )
+ActiveSkillType2.dt[, ActiveSkillId := NULL]
+ActiveSkillType2.dt <- merge(
+    ActiveSkill2.dt[, c("ActiveSkillId", "ActiveSkillName")],
+    ActiveSkillType2.dt[, c("ActiveSkillName", "ActiveSkillType")],
     by = "ActiveSkillName"
   )
 ActiveSkillType2.dt[, ActiveSkillName := NULL]
@@ -231,32 +236,9 @@ Monster2.dt <- monData.dt[, c(
   )]
 Monster2.dt[, Id := .I]
 
-con <- dbConnect(SQLite(), "C:/Users/Jutong/Documents/paddata/padmonster.sqlite3")
+con <- dbConnect(SQLite(), "padmonster.sqlite3")
 
-dbExecute(con, "DROP TABLE Monster")
-
-sql <- 'CREATE TABLE "Monster"
-  ( `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-    `MonsterId` INTEGER NOT NULL UNIQUE,
-    `JpName` TEXT,
-    `CnName` TEXT,
-    `Rarity` INTEGER,
-    `MainAtt` TEXT,
-    `SubAtt` TEXT,
-    `LvMax` INTEGER,
-    `Hp` INTEGER,
-    `Atk` INTEGER,
-    `Rcv` INTEGER,
-    `Hp110` INTEGER,
-    `Atk110` INTEGER,
-    `Rcv110` INTEGER,
-    `ActiveSkillId` INTEGER,
-    `LeaderSkillId` INTEGER,
-    `MonsterIconDownload` TEXT
-  );'
-
-dbExecute(con, sql)
-
+dbExecute(con, "DELETE FROM Monster")
 dbWriteTable(con, "Monster", Monster2.dt, append = T)
 
 dbExecute(con, "DELETE FROM TypeRelation")
@@ -268,14 +250,7 @@ dbWriteTable(con, "AwokenSkillRelation", AwokenSkillRelation2.dt, append = T)
 dbExecute(con, "DELETE FROM ActiveSkill")
 dbWriteTable(con, "ActiveSkill", ActiveSkill2.dt, append = T)
 
-dbExecute(con, "DROP TABLE ActiveSkillType")
-
-sql <- 'CREATE TABLE `ActiveSkillType`
-  ( `ActiveSkillId` INTEGER,
-    `ActiveSkillType` TEXT
-  )'
-dbExecute(con, sql)
-
+dbExecute(con, "DELETE FROM ActiveSkillType")
 dbWriteTable(con, "ActiveSkillType", ActiveSkillType2.dt, append = T)
 
 dbExecute(con, "DELETE FROM LeaderSkill")
