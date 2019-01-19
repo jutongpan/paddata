@@ -1,0 +1,284 @@
+library(rvest)
+library(pbapply)
+library(data.table)
+library(DBI)
+library(RSQLite)
+library(stringr)
+
+setwd("C:/Users/Jutong/Documents/padmonster")
+
+con <- dbConnect(SQLite(), "db/padmonster.sqlite3")
+for (table in dbListTables(con)) {
+  assign(paste0(table, ".dt"), setDT(dbReadTable(con, table)))
+}
+ActiveSkillNamePattern <- paste0(AwokenSkill.dt$AwokenSkillName, collapse = "|")
+dbDisconnect(con)
+
+rmSpacesBreaks <- function(text.vt) {
+  trimws(gsub(x = text.vt, pattern = "\\\n|\\\t", replacement = ""))
+}
+
+ifEmptythenNA <- function(x) {
+  if (length(x)==0) {
+    is.na(x) <- T
+  }
+  x
+}
+
+
+readMonsterPage <- function(MonsterId) {
+  webpage <- tryCatch(
+      # read_html(paste0("http://pad.skyozora.com/pets/", MonsterId)),
+      read_html(paste0("C:/Users/Jutong/Documents/HTMLs/", MonsterId, ".html")),
+      error = function(e) NA
+    )
+  if (is.na(webpage)) return(NA)
+  if (length(webpage %>% html_nodes("table tr td table tr td h3") %>% html_text()) == 0) {
+    webpage <- NA
+  }
+  webpage
+}
+
+id.vt <- 1:5044
+webpage.ls <- pblapply(id.vt, readMonsterPage)
+names(webpage.ls) <- id.vt
+webpage.ls[is.na(webpage.ls)] <- NULL
+
+
+parseMonData <- function(webpage) {
+
+  MonsterId <- webpage %>% html_nodes("table tr td table tr td h3") %>% html_text() %>%
+    sub(pattern = "No\\.([0-9]+) - .*", replacement = "\\1") %>% as.integer()
+
+  JpName <- webpage %>% html_nodes("table tr td table tr td h3") %>% html_text() %>%
+    sub(pattern = ".* - (.*)", replacement = "\\1")
+
+  CnName <- webpage %>% html_nodes("table tr td table tr td h2") %>% html_text()
+
+  Rarity <- stringr::str_count(
+    string = webpage %>% html_nodes("table+ table table td+ td") %>% html_text(),
+    pattern = "★"
+  )
+
+  titles <- webpage %>% html_nodes("table tr td a") %>% html_attr("title")
+
+  MainAtt <- titles %>%
+    grep(pattern = "主屬性:(.)", value = T) %>%
+    sub(pattern = "主屬性:(.)", replacement = "\\1")
+
+  SubAtt <- titles %>%
+    grep(pattern = "副屬性:(.)", value = T) %>%
+    sub(pattern = "副屬性:(.)", replacement = "\\1")
+  SubAtt <- ifEmptythenNA(SubAtt)
+
+  alltypes <- c("神", "龍", "惡魔", "平衡", "攻擊", "體力", "回復", "機械", "進化用", "強化合成用", "能力覺醒用", "販賣用")
+
+  Type <- titles %>%
+    grep(pattern = paste(paste0("^", alltypes, "$"), collapse = "|"), value = T)
+
+  stats <- webpage %>%
+    html_nodes("table tr td table tr td") %>%
+    html_text() %>% grep(pattern = "LV\\.", value = T)
+
+  stats_lvmax <- stats[3]
+
+  lvmax <- sub(x = stats_lvmax, pattern = ".*LV.([0-9]+).*", replacement = "\\1") %>% as.integer()
+  hp_lvmax <- sub(x = stats_lvmax, pattern = ".*HP: ([0-9]+).*", replacement = "\\1") %>% as.integer()
+  atk_lvmax <- sub(x = stats_lvmax, pattern = ".*攻擊力: ([0-9]+).*", replacement = "\\1") %>% as.integer()
+  rcv_lvmax <- sub(x = stats_lvmax, pattern = ".*回復力: (\\-*[0-9]+).*", replacement = "\\1") %>% as.integer()
+
+  hp_lv110 <- NA_integer_
+  atk_lv110 <- NA_integer_
+  rcv_lv110 <- NA_integer_
+
+  if (length(stats)>7) {
+    stats_lv110 <- stats[5]
+    hp_lv110 <- sub(x = stats_lv110, pattern = ".*HP: ([0-9]+).*", replacement = "\\1") %>% as.integer()
+    atk_lv110 <- sub(x = stats_lv110, pattern = ".*攻擊力: ([0-9]+).*", replacement = "\\1") %>% as.integer()
+    rcv_lv110 <- sub(x = stats_lv110, pattern = ".*回復力: ([0-9]+).*", replacement = "\\1") %>% as.integer()
+  }
+
+  nodes <- webpage %>% html_nodes("table tr td")
+
+  texts <- rmSpacesBreaks(nodes %>% html_text())
+
+  ActiveSkillName <- sub(
+    x = texts[grepl(x = texts, pattern = "^主動技能 -")],
+    pattern = "主動技能 - (.*)",
+    replacement = "\\1"
+  )
+  MaxCd <- texts[which(texts=="初始冷卻")+1] %>% str_extract(pattern = "[0-9]+") %>% as.integer()
+  MinCd <- texts[which(texts=="最小冷卻")+1] %>% str_extract(pattern = "[0-9]+") %>% as.integer()
+  ActiveSkillDescription <- paste0(xml_contents(nodes[which(texts=="最小冷卻")+2]), collapse = "")
+
+  AwokenSkillHeadLoc <- which(html_text(nodes)=="覺醒技能" & html_attr(nodes, "class") == "head")
+  AwokenSkill <- nodes[AwokenSkillHeadLoc+1] %>% html_nodes("a") %>% html_attr("title") %>% str_extract(ActiveSkillNamePattern)
+
+  SuperAwokenHeadLoc <- which(html_text(nodes)=="超覺醒" & html_attr(nodes, "class") == "head")
+  SuperAwokenSkill <- nodes[SuperAwokenHeadLoc+1] %>% html_nodes("a") %>% html_attr("title") %>% str_extract(ActiveSkillNamePattern)
+
+  LeaderSkillNameLoc <- which(grepl(x = texts, pattern = "^隊長技能 -"))
+  LeaderSkillName <- sub(
+    x = texts[LeaderSkillNameLoc],
+    pattern = "隊長技能 - (.*)",
+    replacement = "\\1"
+  )
+  # LeaderSkillDescription <- texts[LeaderSkillNameLoc+2]
+  LeaderSkillDescription <- paste0(xml_contents(nodes[LeaderSkillNameLoc+2]), collapse = "")
+  if (LeaderSkillName == "無") LeaderSkillDescription <- "無"
+
+  hrefs <- webpage %>% html_nodes("link") %>% html_attr("href")
+  # MonsterIconDownload <- hrefs[grepl("i1296.photobucket.com/albums/ag18/skyozora/pets_icon", hrefs)]
+  MonsterIconDownload <- hrefs[4]
+
+  monData <- list(
+      MonsterId = MonsterId,
+      JpName = JpName,
+      CnName = CnName,
+      Rarity = Rarity,
+      MainAtt = MainAtt,
+      SubAtt = SubAtt,
+      Type = Type,
+      LvMax = lvmax,
+      Hp = hp_lvmax,
+      Atk = atk_lvmax,
+      Rcv = rcv_lvmax,
+      Hp110 = hp_lv110,
+      Atk110 = atk_lv110,
+      Rcv110 = rcv_lv110,
+      ActiveSkillName = ActiveSkillName,
+      ActiveSkillDescription = ActiveSkillDescription,
+      MaxCd = MaxCd,
+      MinCd = MinCd,
+      AwokenSkill = AwokenSkill,
+      SuperAwokenSkill = SuperAwokenSkill,
+      LeaderSkillName = LeaderSkillName,
+      LeaderSkillDescription = LeaderSkillDescription,
+      MonsterIconDownload = MonsterIconDownload
+    )
+
+  # monData <- lapply(monData, ifEmptythenNA)
+
+}
+
+monData.ls <- pblapply(webpage.ls, parseMonData)
+
+dropNonAtomic <- function(l) {
+  l$Type <- NULL
+  l$AwokenSkill <- NULL
+  l$SuperAwokenSkill <- NULL
+  l
+}
+
+monData.dt <- rbindlist(lapply(monData.ls, dropNonAtomic))
+
+getTypeRelation <- function(l) {
+  data.table(MonsterId = l$MonsterId, TypeName = l$Type)
+}
+TypeLong.dt <- rbindlist(lapply(monData.ls, getTypeRelation))
+TypeRelation2.dt <- merge(TypeLong.dt, Type.dt, by = "TypeName", all.x = T)
+TypeRelation2.dt[, c("TypeName", "TypeIconDownload") := NULL]
+setorder(TypeRelation2.dt, MonsterId)
+TypeRelation2.dt[, Id := .I]
+
+getAwokenSkillRelation <- function(l) {
+  if (length(c(l$AwokenSkill, l$SuperAwokenSkill)) == 0) return(NULL)
+  d <- data.table(MonsterId = l$MonsterId, AwokenSkillName = c(l$AwokenSkill, l$SuperAwokenSkill), SuperAwoken = 1L)
+  d[, Position := .I]
+  d[Position <= length(l$AwokenSkill), SuperAwoken := 0L]
+  d
+}
+AwokenSkillLong.dt <- rbindlist(lapply(monData.ls, getAwokenSkillRelation))
+AwokenSkillRelation2.dt <- merge(AwokenSkillLong.dt, AwokenSkill.dt, by = "AwokenSkillName", all.x = T)
+AwokenSkillRelation2.dt[, c("AwokenSkillName", "AwokenSkillIconDownload", "AwokenSkillDescription") := NULL]
+setcolorder(AwokenSkillRelation2.dt, c("MonsterId", "AwokenSkillId", "Position", "SuperAwoken"))
+setorder(AwokenSkillRelation2.dt, MonsterId, Position)
+AwokenSkillRelation2.dt[, Id := .I]
+
+ActiveSkill2.dt <- unique(
+  monData.dt[, c("ActiveSkillName", "ActiveSkillDescription", "MinCd", "MaxCd")],
+  by = "ActiveSkillName")
+ActiveSkill2.dt[, ActiveSkillDescription := gsub(x = ActiveSkillDescription,
+    pattern = "images/drops", replacement = "img/Orb")]
+ActiveSkill2.dt[, ActiveSkillDescription := gsub(x = ActiveSkillDescription,
+    pattern = 'width="25"', replacement = 'width="19"')]
+ActiveSkill2.dt[, ActiveSkillDescription := gsub(x = ActiveSkillDescription,
+    pattern = '<img src="images/change.gif">', replacement = '變成')]
+ActiveSkill2.dt[, ActiveSkillId := .I]
+
+ActiveSkillType2.dt <- merge(
+    ActiveSkill.dt[, c("ActiveSkillId", "ActiveSkillName")],
+    ActiveSkillType.dt[, c("ActiveSkillName", "ActiveSkillType")],
+    by = "ActiveSkillName"
+  )
+ActiveSkillType2.dt[, ActiveSkillName := NULL]
+setkey(ActiveSkillType2.dt, ActiveSkillId)
+
+LeaderSkill2.dt <- unique(
+  monData.dt[, c("LeaderSkillName", "LeaderSkillDescription")],
+  by = "LeaderSkillName")
+LeaderSkill2.dt[, LeaderSkillId := .I]
+
+monData.dt <- merge(monData.dt, ActiveSkill2.dt[, c("ActiveSkillName", "ActiveSkillId")], by = "ActiveSkillName", all.x = T)
+monData.dt <- merge(monData.dt, LeaderSkill2.dt[, c("LeaderSkillName", "LeaderSkillId")], by = "LeaderSkillName", all.x = T)
+setkey(monData.dt, MonsterId)
+Monster2.dt <- monData.dt[, c(
+    "MonsterId", "JpName", "CnName", "Rarity", "MainAtt", "SubAtt",
+    "LvMax", "Hp", "Atk", "Rcv",
+    "Hp110", "Atk110", "Rcv110",
+    "ActiveSkillId", "LeaderSkillId",
+    "MonsterIconDownload"
+  )]
+Monster2.dt[, Id := .I]
+
+con <- dbConnect(SQLite(), "C:/Users/Jutong/Documents/paddata/padmonster.sqlite3")
+
+dbExecute(con, "DROP TABLE Monster")
+
+sql <- 'CREATE TABLE "Monster"
+  ( `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+    `MonsterId` INTEGER NOT NULL UNIQUE,
+    `JpName` TEXT,
+    `CnName` TEXT,
+    `Rarity` INTEGER,
+    `MainAtt` TEXT,
+    `SubAtt` TEXT,
+    `LvMax` INTEGER,
+    `Hp` INTEGER,
+    `Atk` INTEGER,
+    `Rcv` INTEGER,
+    `Hp110` INTEGER,
+    `Atk110` INTEGER,
+    `Rcv110` INTEGER,
+    `ActiveSkillId` INTEGER,
+    `LeaderSkillId` INTEGER,
+    `MonsterIconDownload` TEXT
+  );'
+
+dbExecute(con, sql)
+
+dbWriteTable(con, "Monster", Monster2.dt, append = T)
+
+dbExecute(con, "DELETE FROM TypeRelation")
+dbWriteTable(con, "TypeRelation", TypeRelation2.dt, append = T)
+
+dbExecute(con, "DELETE FROM AwokenSkillRelation")
+dbWriteTable(con, "AwokenSkillRelation", AwokenSkillRelation2.dt, append = T)
+
+dbExecute(con, "DELETE FROM ActiveSkill")
+dbWriteTable(con, "ActiveSkill", ActiveSkill2.dt, append = T)
+
+dbExecute(con, "DROP TABLE ActiveSkillType")
+
+sql <- 'CREATE TABLE `ActiveSkillType`
+  ( `ActiveSkillId` INTEGER,
+    `ActiveSkillType` TEXT
+  )'
+dbExecute(con, sql)
+
+dbWriteTable(con, "ActiveSkillType", ActiveSkillType2.dt, append = T)
+
+dbExecute(con, "DELETE FROM LeaderSkill")
+dbWriteTable(con, "LeaderSkill", LeaderSkill2.dt, append = T)
+
+dbDisconnect(con)
