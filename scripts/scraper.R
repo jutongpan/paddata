@@ -28,7 +28,7 @@ ifEmptythenNA <- function(x) {
 
 readMonsterPage <- function(MonsterId) {
   webpage <- tryCatch(
-      read_html(paste0("HTMLs/", MonsterId, ".html")),
+      read_html(paste0("raw/", MonsterId, ".html")),
       error = function(e) NA
     )
   if (is.na(webpage)) return(NA)
@@ -130,6 +130,14 @@ parseMonData <- function(webpage) {
   # MonsterIconDownload <- hrefs[grepl("i1296.photobucket.com/albums/ag18/skyozora/pets_icon", hrefs)]
   MonsterIconDownload <- hrefs[4]
 
+  evoTargets <- webpage %>% html_nodes(".EvoTarget") %>% html_attr("href")
+  if (length(evoTargets) == 0) {
+    evoList <- c()
+  } else {
+    evoTargets <- grep(x = evoTargets, pattern = "pets/[0-9]+", value = T)
+    evoList <- as.integer(gsub(x = evoTargets, pattern = "pets/([0-9]+)", replacement = "\\1"))
+  }
+
   monData <- list(
       MonsterId = MonsterId,
       JpName = JpName,
@@ -153,7 +161,8 @@ parseMonData <- function(webpage) {
       SuperAwokenSkill = SuperAwokenSkill,
       LeaderSkillName = LeaderSkillName,
       LeaderSkillDescription = LeaderSkillDescription,
-      MonsterIconDownload = MonsterIconDownload
+      MonsterIconDownload = MonsterIconDownload,
+      evoList = evoList
     )
 
   # monData <- lapply(monData, ifEmptythenNA)
@@ -223,6 +232,9 @@ LeaderSkill2.dt <- unique(
   monData.dt[, c("LeaderSkillName", "LeaderSkillDescription")],
   by = "LeaderSkillName")
 LeaderSkill2.dt[, LeaderSkillId := .I]
+
+evo.ls <- unique(lapply(monData.ls, function(l) l$evoList))
+evo.dt <- rbindlist(lapply(evo.ls, function(v) data.table(evo = v)), idcol = "Id")
 
 monData.dt <- merge(monData.dt, ActiveSkill2.dt[, c("ActiveSkillName", "ActiveSkillId")], by = "ActiveSkillName", all.x = T)
 monData.dt <- merge(monData.dt, LeaderSkill2.dt[, c("LeaderSkillName", "LeaderSkillId")], by = "LeaderSkillName", all.x = T)
