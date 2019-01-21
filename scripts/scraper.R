@@ -5,7 +5,11 @@ library(DBI)
 library(RSQLite)
 library(stringr)
 
-setwd("C:/Users/Jutong/Documents/paddata")
+if (Sys.info()[["nodename"]] == "JUTONG-X1C") {
+  setwd("C:/Users/Jutong/Documents/paddata")
+} else if (Sys.info()[["nodename"]] == "MU-JPAN") {
+  setwd("C:/Users/JPan/Documents/repo/paddata")
+}
 
 con <- dbConnect(SQLite(), "padmonster.sqlite3")
 for (table in dbListTables(con)) {
@@ -39,7 +43,7 @@ readMonsterPage <- function(MonsterId) {
 }
 
 id.vt <- 1:5074
-webpage.ls <- pblapply(id.vt, readMonsterPage)
+webpage.ls <- lapply(id.vt, readMonsterPage)
 names(webpage.ls) <- id.vt
 webpage.ls[is.na(webpage.ls)] <- NULL
 
@@ -175,6 +179,7 @@ dropNonAtomic <- function(l) {
   l$Type <- NULL
   l$AwokenSkill <- NULL
   l$SuperAwokenSkill <- NULL
+  l$evoList <- NULL
   l
 }
 
@@ -234,7 +239,8 @@ LeaderSkill2.dt <- unique(
 LeaderSkill2.dt[, LeaderSkillId := .I]
 
 evo.ls <- unique(lapply(monData.ls, function(l) l$evoList))
-evo.dt <- rbindlist(lapply(evo.ls, function(v) data.table(evo = v)), idcol = "Id")
+evo.ls <- evo.ls[lengths(evo.ls)>0]
+evo.dt <- rbindlist(lapply(evo.ls, function(v) data.table(MonsterId = v)), idcol = "EvoGroup")
 
 monData.dt <- merge(monData.dt, ActiveSkill2.dt[, c("ActiveSkillName", "ActiveSkillId")], by = "ActiveSkillName", all.x = T)
 monData.dt <- merge(monData.dt, LeaderSkill2.dt[, c("LeaderSkillName", "LeaderSkillId")], by = "LeaderSkillName", all.x = T)
@@ -267,5 +273,8 @@ dbWriteTable(con, "ActiveSkillType", ActiveSkillType2.dt, append = T)
 
 dbExecute(con, "DELETE FROM LeaderSkill")
 dbWriteTable(con, "LeaderSkill", LeaderSkill2.dt, append = T)
+
+dbExecute(con, "DELETE FROM Evolution")
+dbWriteTable(con, "Evolution", evo.dt, append = T)
 
 dbDisconnect(con)
