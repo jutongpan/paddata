@@ -15,7 +15,6 @@ con <- dbConnect(SQLite(), "padmonster.sqlite3")
 for (table in dbListTables(con)) {
   assign(paste0(table, ".dt"), setDT(dbReadTable(con, table)))
 }
-ActiveSkillNamePattern <- paste0(AwokenSkill.dt$AwokenSkillName, collapse = "|")
 dbDisconnect(con)
 
 rmSpacesBreaks <- function(text.vt) {
@@ -115,10 +114,12 @@ parseMonData <- function(webpage) {
   ActiveSkillDescription <- paste0(xml_contents(nodes[which(texts=="最小冷卻")+2]), collapse = "")
 
   AwokenSkillHeadLoc <- which(html_text(nodes)=="覺醒技能" & html_attr(nodes, "class") == "head")
-  AwokenSkill <- nodes[AwokenSkillHeadLoc+1] %>% html_nodes("a") %>% html_attr("title") %>% str_extract(ActiveSkillNamePattern)
+  AwokenSkill <- nodes[AwokenSkillHeadLoc+1] %>% html_nodes("a") %>% html_attr("title") %>% str_match("^【(.*)】")
+  AwokenSkill <- AwokenSkill[,2]
 
   SuperAwokenHeadLoc <- which(html_text(nodes)=="超覺醒" & html_attr(nodes, "class") == "head")
-  SuperAwokenSkill <- nodes[SuperAwokenHeadLoc+1] %>% html_nodes("a") %>% html_attr("title") %>% str_extract(ActiveSkillNamePattern)
+  SuperAwokenSkill <- nodes[SuperAwokenHeadLoc+1] %>% html_nodes("a") %>% html_attr("title") %>% str_match("^【(.*)】")
+  SuperAwokenSkill <- SuperAwokenSkill[,2]
 
   LeaderSkillNameLoc <- which(grepl(x = texts, pattern = "^隊長技能 -"))
   LeaderSkillName <- sub(
