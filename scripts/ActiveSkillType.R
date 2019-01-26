@@ -4,7 +4,7 @@ library(rvest)
 library(DBI)
 library(RSQLite)
 
-setwd("//Users/yawenliang/Documents/PadMonster")
+setwd("//Users/yawenliang/Documents/paddata")
 
 # Get active skill type list
 
@@ -48,7 +48,7 @@ ActiveSkillList.dt <- data.table(unique(ActiveSkillType.dt4$ActiveSkillName))
 fwrite(x = ActiveSkillList.dt, "db/ActiveSkillList.csv")
 
 # Get ActiveSkillId
-conn <- dbConnect(drv = RSQLite::SQLite(), "db/padmonster.sqlite3")
+conn <- dbConnect(drv = RSQLite::SQLite(), "padmonster.sqlite3")
 ActiveSkill <- dbReadTable(conn,"ActiveSkill")
 ActiveSkill.dt <- data.table(ActiveSkill)
 NameID <- ActiveSkill.dt[, .(ActiveSkillId, ActiveSkillName)]
@@ -59,12 +59,13 @@ ActiveSkillType.dt <- merge(NameID, ActiveSkillType.dt4, all.x = TRUE)
 
 ActiveSkillType.dt <- ActiveSkillType.dt[order(ActiveSkillId)]
 setnames(ActiveSkillType.dt, "value", "ActiveSkillType")
-ActiveSkillType.dt[, Id := 1:nrow(ActiveSkillType.dt)]
 
-setcolorder(ActiveSkillType.dt, c("Id", "ActiveSkillId", "ActiveSkillType", "ActiveSkillName"))
+setcolorder(ActiveSkillType.dt, c("ActiveSkillId", "ActiveSkillType"))
+ActiveSkillType.dt<- ActiveSkillType.dt[ , ActiveSkillName := NULL]
 
 
 # Write the data into database
 
-dbWriteTable(conn, "ActiveSkillType", ActiveSkillType.dt, overwrite = TRUE)
+dbExecute(conn, "DELETE FROM ActiveSkillType")
+dbWriteTable(conn, "ActiveSkillType", ActiveSkillType.dt, append = T)
 dbDisconnect(conn) 
