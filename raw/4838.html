@@ -489,6 +489,33 @@ function vote(e){
 		<td width="39" bgcolor="#000000" class="previous_next">
 		<a href="pets/4839" class="tooltip" title="&lt;img src=&quot;http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4839_zpshogz37gj.png&quot; width=&quot;50&quot; /&gt; 4839 - 聖域之守護神・雅典娜 -NON-"><img src="images/right01.png" width="38" height="585" /></a>		</td>
 	</tr>
+	<tr>
+		<td colspan="3" align="center" bgcolor="#000000" style="font-size:16px">
+			<p id="open_block"><a onclick="#" class="b01 bold">↓入手此角色可獲得寶珠外觀↓</a>
+			<div id="block01" style="display:none; margin: 0">
+			<img src="images/drops/block04.jpg" width="400" />
+			</div>
+			</p>
+			<style>
+			.b01 {color:#99e8ff;}
+			</style>
+			<script type="text/javascript">
+			$(function() {
+				$('#block01').hide();
+				$('#open_block a').click(function() {
+					if (!$(this).hasClass('active')) {
+						$(this).addClass('active').text('↑隱藏↑');
+						$('#block01').stop(false, false).fadeToggle(1000);
+					} else {
+						$(this).removeClass('active').text('↓入手此角色後可獲得寶珠外觀↓');
+						$('#block01').stop(false, false).slideUp(500);
+					}
+					return false;
+				});
+			});
+			</script>
+		</td>
+	</tr>
 </table>
 
 <table border="0" cellpadding="10" cellspacing="1" width="720" align="center">
@@ -635,7 +662,6 @@ function vote(e){
 </script>
 ---></div>
 
-<br />
 
 
 <table width="720" border="0" cellpadding="10" cellspacing="1" align="center">
@@ -1116,7 +1142,7 @@ function updateTO(element) {
       <td align="left">
       Graphics © Copyright by Gungho Online Entertainment, Inc.<br>
       <a href="http://pad.skyozora.com">戰友系統及資訊網</a> 由 Sky C. 持有，介面設計 Naldo W.<br>
-      如對本網站有任何查詢，歡迎電郵至 <a href="/cdn-cgi/l/email-protection#640d0a020b24170f1d0b1e0b16054a070b09"><span class="__cf_email__" data-cfemail="87eee9e1e8c7f4ecfee8fde8f5e6a9e4e8ea">[email&#160;protected]</span></a>
+      如對本網站有任何查詢，歡迎電郵至 <a href="/cdn-cgi/l/email-protection#0c65626a634c7f67756376637e6d226f6361"><span class="__cf_email__" data-cfemail="741d1a121b34071f0d1b0e1b06155a171b19">[email&#160;protected]</span></a>
       </td>
       
       <td align="right">

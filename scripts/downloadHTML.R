@@ -1,15 +1,18 @@
 setwd("C:/Users/Jutong/Documents/paddata")
 
-ids <- 5001:5022
-for (id in ids) {
-  download.file(paste0("http://pad.skyozora.com/pets/", id), paste0("raw/", id, ".html"))
-}
-
-## For full download only
-for (id in 1:5074) {
-  download.file(paste0("http://pad.skyozora.com/pets/", id), paste0("raw/", id, ".html"))
-  if (id %% 100 == 0) Sys.sleep(30)
-  if (id %% 10 == 0) Sys.sleep(3)
+id <- 1
+while (id <= 5128) {
+  tryCatch(
+    {
+      download.file(paste0("http://pad.skyozora.com/pets/", id), paste0("raw/", id, ".html"))
+      if (id %% 100 == 0) Sys.sleep(30)
+      if (id %% 10 == 0) Sys.sleep(3)
+      id <- id + 1
+    },
+    error = function(e) {
+      Sys.sleep(300)
+    }
+  )
 }
 
 ## Download page of active skills by type

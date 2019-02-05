@@ -464,6 +464,33 @@ function vote(e){
 		<td width="39" bgcolor="#000000" class="previous_next">
 		<a href="pets/4930" class="tooltip" title="&lt;img src=&quot;http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4930_zps5shss6xp.png&quot; width=&quot;50&quot; /&gt; 4930 - 雙重驅動器＋疾風＆王牌記憶體"><img src="images/right01.png" width="38" height="585" /></a>		</td>
 	</tr>
+	<tr>
+		<td colspan="3" align="center" bgcolor="#000000" style="font-size:16px">
+			<p id="open_block"><a onclick="#" class="b01 bold">↓入手此角色可獲得寶珠外觀↓</a>
+			<div id="block01" style="display:none; margin: 0">
+			<img src="images/drops/block05.jpg" width="400" />
+			</div>
+			</p>
+			<style>
+			.b01 {color:#99e8ff;}
+			</style>
+			<script type="text/javascript">
+			$(function() {
+				$('#block01').hide();
+				$('#open_block a').click(function() {
+					if (!$(this).hasClass('active')) {
+						$(this).addClass('active').text('↑隱藏↑');
+						$('#block01').stop(false, false).fadeToggle(1000);
+					} else {
+						$(this).removeClass('active').text('↓入手此角色後可獲得寶珠外觀↓');
+						$('#block01').stop(false, false).slideUp(500);
+					}
+					return false;
+				});
+			});
+			</script>
+		</td>
+	</tr>
 </table>
 
 <table border="0" cellpadding="10" cellspacing="1" width="720" align="center">
@@ -610,7 +637,6 @@ function vote(e){
 </script>
 ---></div>
 
-<br />
 
 
 <table width="720" border="0" cellpadding="10" cellspacing="1" align="center">
@@ -1090,7 +1116,7 @@ function updateTO(element) {
       <td align="left">
       Graphics © Copyright by Gungho Online Entertainment, Inc.<br>
       <a href="http://pad.skyozora.com">戰友系統及資訊網</a> 由 Sky C. 持有，介面設計 Naldo W.<br>
-      如對本網站有任何查詢，歡迎電郵至 <a href="/cdn-cgi/l/email-protection#caa3a4aca58ab9a1b3a5b0a5b8abe4a9a5a7"><span class="__cf_email__" data-cfemail="9bf2f5fdf4dbe8f0e2f4e1f4e9fab5f8f4f6">[email&#160;protected]</span></a>
+      如對本網站有任何查詢，歡迎電郵至 <a href="/cdn-cgi/l/email-protection#0e676068614e7d65776174617c6f206d6163"><span class="__cf_email__" data-cfemail="ff96919990bf8c94869085908d9ed19c9092">[email&#160;protected]</span></a>
       </td>
       
       <td align="right">
