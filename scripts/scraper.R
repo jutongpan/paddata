@@ -43,7 +43,8 @@ readMonsterPage <- function(MonsterId) {
   webpage
 }
 
-id.vt <- 1:5074
+filenames <- list.files("raw/", pattern = "^[0-9]+.html$")
+id.vt <- 1:max(as.integer(gsub(x = filenames, pattern = ".html", replacement = "")))
 webpage.ls <- lapply(id.vt, readMonsterPage)
 names(webpage.ls) <- id.vt
 webpage.ls[is.na(webpage.ls)] <- NULL
