@@ -18,3 +18,5 @@ for (i in 1:nrow(MonsterIcon.dt)){
                     mode = "wb")
   }
 }
+
+dbDisconnect(conn)
