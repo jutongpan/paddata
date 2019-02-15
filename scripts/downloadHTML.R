@@ -1,13 +1,14 @@
 setwd("C:/Users/Jutong/Documents/paddata")
 
-id <- 1
-while (id <= 5128) {
+id.vt <- c(5078:5115, 5150:5153)
+index <- 1
+while (index <= length(id.vt)) {
   tryCatch(
     {
-      download.file(paste0("http://pad.skyozora.com/pets/", id), paste0("raw/", id, ".html"))
-      if (id %% 100 == 0) Sys.sleep(30)
-      if (id %% 10 == 0) Sys.sleep(3)
-      id <- id + 1
+      download.file(paste0("http://pad.skyozora.com/pets/", id.vt[index]), paste0("raw/", id.vt[index], ".html"))
+      if (index %% 100 == 0) Sys.sleep(30)
+      if (index %% 10 == 0) Sys.sleep(3)
+      index <- index + 1
     },
     error = function(e) {
       Sys.sleep(300)
