@@ -116,7 +116,7 @@ parseMonData <- function(webpage) {
   MinCd <- texts[which(texts=="最小冷卻")+1] %>% str_extract(pattern = "[0-9]+") %>% as.integer()
   ActiveSkillDescription <- paste0(xml_contents(nodes[which(texts=="最小冷卻")+2]), collapse = "")
 
-  Assistable <- texts %>% grepl(pattern = "此寵物可以作為輔助寵物")) %>% any()
+  Assistable <- texts %>% grepl(pattern = "此寵物可以作為輔助寵物") %>% any()
 
   AwokenSkillHeadLoc <- which(html_text(nodes)=="覺醒技能" & html_attr(nodes, "class") == "head")
   AwokenSkill <- nodes[AwokenSkillHeadLoc+1] %>% html_nodes("a") %>% html_attr("title") %>% str_match("^【(.*)】")
@@ -264,7 +264,7 @@ Monster2.dt <- monData.dt[, c(
     "MonsterId", "JpName", "CnName", "Rarity", "MainAtt", "SubAtt",
     "LvMax", "Hp", "Atk", "Rcv",
     "Hp110", "Atk110", "Rcv110",
-    "ActiveSkillId", "LeaderSkillId",
+    "ActiveSkillId", "Assistable", "LeaderSkillId",
     "MonsterIconDownload"
   )]
 Monster2.dt[, Id := .I]
