@@ -116,6 +116,8 @@ parseMonData <- function(webpage) {
   MinCd <- texts[which(texts=="最小冷卻")+1] %>% str_extract(pattern = "[0-9]+") %>% as.integer()
   ActiveSkillDescription <- paste0(xml_contents(nodes[which(texts=="最小冷卻")+2]), collapse = "")
 
+  Assistable <- texts %>% grepl(pattern = "此寵物可以作為輔助寵物")) %>% any()
+
   AwokenSkillHeadLoc <- which(html_text(nodes)=="覺醒技能" & html_attr(nodes, "class") == "head")
   AwokenSkill <- nodes[AwokenSkillHeadLoc+1] %>% html_nodes("a") %>% html_attr("title") %>% str_match("^【(.*)】")
   if (length(AwokenSkill)==0) {
@@ -171,6 +173,7 @@ parseMonData <- function(webpage) {
       Rcv110 = rcv_lv110,
       ActiveSkillName = ActiveSkillName,
       ActiveSkillDescription = ActiveSkillDescription,
+      Assistable = Assistable,
       MaxCd = MaxCd,
       MinCd = MinCd,
       AwokenSkill = AwokenSkill,
