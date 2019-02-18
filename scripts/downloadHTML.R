@@ -1,6 +1,6 @@
 setwd("C:/Users/Jutong/Documents/paddata")
 
-id.vt <- c(5078:5115, 5150:5153)
+id.vt <- c(5129:5134, 5154)
 index <- 1
 while (index <= length(id.vt)) {
   tryCatch(
