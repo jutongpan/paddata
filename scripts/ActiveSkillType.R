@@ -4,16 +4,11 @@ library(rvest)
 library(DBI)
 library(RSQLite)
 
-if (Sys.info()[["nodename"]] == "JUTONG-X1C") {
-  setwd("C:/Users/Jutong/Documents/paddata")
-} else {
-  setwd("//Users/yawenliang/Documents/paddata")
-}
+setwd("//Users/yawenliang/Documents/paddata")
 
 # Get active skill type list
 
-# url <- 'http://pad.skyozora.com/skill/%E4%B8%BB%E5%8B%95%E6%8A%80%E8%83%BD%E4%B8%80%E8%A6%BD/'
-url <- "raw/ActiveSkillType.html"
+url <- 'http://pad.skyozora.com/skill/%E4%B8%BB%E5%8B%95%E6%8A%80%E8%83%BD%E4%B8%80%E8%A6%BD/'
 webpage <- read_html(url)
 webnodes1 <- html_nodes(webpage, 'h3')
 webnodes2 <- html_nodes(webpage, 'table')
@@ -47,10 +42,10 @@ ActiveSkillType.dt3[, c("ActiveSkillTable", "ActiveSkillType") := NULL]
 
 ActiveSkillType.dt4 <- melt(ActiveSkillType.dt3, id.vars = c("ActiveSkillName", "ActiveSkillDescription"),
                            measure.vars = paste0("ActiveSkillType", 1:MaxComb), na.rm = TRUE)
-ActiveSkillType.dt4[, c("variable", "ActiveSkillDescription") := NULL]
+ActiveSkillType.dt4 [, c("variable", "ActiveSkillDescription") := NULL]
 
-# ActiveSkillList.dt <- data.table(unique(ActiveSkillType.dt4$ActiveSkillName))
-# fwrite(x = ActiveSkillList.dt, "db/ActiveSkillList.csv")
+ActiveSkillList.dt <- data.table(unique(ActiveSkillType.dt4$ActiveSkillName))
+fwrite(x = ActiveSkillList.dt, "db/ActiveSkillList.csv")
 
 # Get ActiveSkillId
 conn <- dbConnect(drv = RSQLite::SQLite(), "padmonster.sqlite3")
