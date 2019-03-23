@@ -4,6 +4,8 @@ library(DBI)
 
 if (Sys.info()[["nodename"]] == "JUTONG-X1C") {
   setwd("C:/Users/Jutong/Documents/paddata")
+} else if (Sys.info()[["nodename"]] == "MU-JPAN") {
+  setwd("C:/Users/JPan/Documents/repo/paddata")
 } else {
   setwd("//Users/yawenliang/Documents/paddata")
 }
