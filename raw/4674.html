@@ -192,6 +192,8 @@ $(function() {
 						</ul>
 					</li>
 
+					<li><a href="/寶珠外觀/">寶珠外觀</a></li>
+					<li><a href="/近期實裝的新寵物/" style="color:#ffff00">近期實裝的新寵物</a></li>
 					<li><a href="/pets/statistics/" style="color:#ffff00">寵物排名</a></li>
 				</ul>
 			</li>
@@ -378,8 +380,8 @@ function vote(e){
       alert('Ajax request 發生錯誤');
     },
     success: function(response) {
-      $('#score'+e).html(response);
-      $('#score'+e).fadeIn();
+      $('#scoregraph').html(response);
+      $('#scoregraph').fadeIn();
     }
   });
   $.ajax({
@@ -390,8 +392,8 @@ function vote(e){
       alert('Ajax request 發生錯誤');
     },
     success: function(response) {
-      $('#score7').html(response);
-      $('#score7').fadeIn();
+      $('#AvgScore').html(response);
+      $('#AvgScore').fadeIn();
     }
   });
 }
@@ -523,7 +525,7 @@ function vote(e){
 			<table width="360" border="0" style="table-layout:fixed">
 				<tr>
 					<td width="46">LV.1</td>
-					<td width="90">HP: 741</td>
+					<td width="80">HP: 741</td>
 					<td>攻擊力: 267</td>
 					<td>回復力: 63</td>
 				</tr>
@@ -540,7 +542,7 @@ function vote(e){
 			<table width="360" border="0" style="table-layout:fixed">
 				<tr>
 					<td width="46">LV.99</td>
-					<td width="90">HP: 3555</td>
+					<td width="80">HP: 3555</td>
 					<td>攻擊力: 1443</td>
 					<td>回復力: 340</td>
 				</tr>
@@ -556,7 +558,7 @@ function vote(e){
 			<table width="360" border="0" style="table-layout:fixed">
 				<tr>
 					<td width="46"></td>
-					<td width="90">HP:  <span style="color:#FF73B7; font-weight:900">+500</span></td>
+					<td width="80">HP:  <span style="color:#FF73B7; font-weight:900">+500</span></td>
 					<td>攻擊力:  <span style="color:#FF73B7; font-weight:900">+150</span></td>
 					<td>回復力:  <span style="color:#FF73B7; font-weight:900">+60</span></td>
 				</tr>
@@ -575,7 +577,7 @@ function vote(e){
 			<table width="360" border="0" style="table-layout:fixed">
 				<tr>
 					<td width="46">LV.110</td>
-					<td width="90">HP: 4622</td>
+					<td width="80">HP: 4622</td>
 					<td>攻擊力: 1876</td>
 					<td>回復力: 442</td>
 				</tr>
@@ -598,7 +600,7 @@ function vote(e){
 			<table width="360" border="0" style="table-layout:fixed">
 				<tr>
 					<td width="46"><div id="lv">LV.1</div></td>
-					<td width="90"><div id="hp">HP: 741</div></td>
+					<td width="80"><div id="hp">HP: 741</div></td>
 					<td><div id="atk">攻擊力: 267</div></td>
 					<td><div id="re">回復力: 63</div></td>
 				</tr>
@@ -953,11 +955,98 @@ p.EvoName {
 
 <table width="720" border="0" cellpadding="10" cellspacing="1" align="center">
 	<tr align="center" bgcolor="#000000">
-		<td align="left" colspan="3" class="head"><span style="font-size:18px">玩家評分</span> <div id="Vote" style="display:inline"></div></td>
+		<td align="left" class="head"><span style="font-size:18px">玩家評分</span> ＊美觀度以外的五個評分項目只會顯示最近90天的評分結果</td>
+		<td align="center" colspan="2">你的評分</td>
 	</tr>
-<tr><td bgcolor=#000000 width="100" align="center">主動技能</td><td bgcolor=#000000 width="500"><div id="score1"><a style="text-decoration:none" class="tooltip" title="共有4人對此項目評分"><span style="border-radius:3px; width: 350px; background:#fe0000; padding:3px; color:#000000; display: inline-block"> </span> 8.75</a></div></td><td bgcolor=#000000 align="center" class="poll"><select id="poll1" name="poll1" onChange="vote(1);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr><td bgcolor=#000000 width="100" align="center">隊長技能</td><td bgcolor=#000000 width="500"><div id="score2"><a style="text-decoration:none" class="tooltip" title="共有2人對此項目評分"><span style="border-radius:3px; width: 140px; background:#ffb452; padding:3px; color:#000000; display: inline-block"> </span> 3.50</a></div></td><td bgcolor=#000000 align="center" class="poll"><select id="poll2" name="poll2" onChange="vote(2);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr><td bgcolor=#000000 width="100" align="center">覺醒技能</td><td bgcolor=#000000 width="500"><div id="score3"><a style="text-decoration:none" class="tooltip" title="共有2人對此項目評分"><span style="border-radius:3px; width: 280px; background:#ffff20; padding:3px; color:#000000; display: inline-block"> </span> 7.00</a></div></td><td bgcolor=#000000 align="center" class="poll"><select id="poll3" name="poll3" onChange="vote(3);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr><td bgcolor=#000000 width="100" align="center">隊伍配合(單人)</td><td bgcolor=#000000 width="500"><div id="score4"><a style="text-decoration:none" class="tooltip" title="共有2人對此項目評分"><span style="border-radius:3px; width: 260px; background:#01fe01; padding:3px; color:#000000; display: inline-block"> </span> 6.50</a></div></td><td bgcolor=#000000 align="center" class="poll"><select id="poll4" name="poll4" onChange="vote(4);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr><td bgcolor=#000000 width="100" align="center">隊伍配合(協力)</td><td bgcolor=#000000 width="500"><div id="score6"><a style="text-decoration:none" class="tooltip" title="共有2人對此項目評分"><span style="border-radius:3px; width: 320px; background:#c4e9ff; padding:3px; color:#000000; display: inline-block"> </span> 8.00</a></div></td><td bgcolor=#000000 align="center" class="poll"><select id="poll6" name="poll6" onChange="vote(6);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr><td bgcolor=#000000 width="100" align="center">美觀度</td><td bgcolor=#000000 width="500"><div id="score5"><a style="text-decoration:none" class="tooltip" title="共有2人對此項目評分"><span style="border-radius:3px; width: 240px; background:#3988ff; padding:3px; color:#000000; display: inline-block"> </span> 6.00</a></div></td><td bgcolor=#000000 align="center" class="poll"><select id="poll5" name="poll5" onChange="vote(5);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr><td bgcolor=#000000 width="100" align="center"><a class="tooltip" title="計算方法 = 6個評分項目/6<br />如該寵物不足6個評分項目會令整體分數下降">整體評分 (?)</a></td><td bgcolor=#000000 colspan="2"><div id="score7"><span style="border-radius:3px; width: 265px; background:#d34eff; padding:3px; color:#000000; display: inline-block"> </span> 6.63</div></td></td></tr></table>
-<br />
+	
+	<tr align="center">
+		<td bgcolor="#000000" width="500" rowspan="7">
+		
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js"></script>
 
+			<div style="width:400px"  id="scoregraph">
+			<canvas id="myChart"></canvas>
+			</div>
+			<script>
+			var ctx = document.getElementById("myChart");
+			var myChart = new Chart(ctx, {
+				type: 'radar',
+				data: {
+					labels: ["作為隊長", "作為隊員", "作為輔助", "單人配合", "協力配合", "美觀度"],
+					datasets: [
+						{
+							label: "評分",
+							data: [0, 0, 0, 0, 0, 6.00],
+							backgroundColor: "rgba(255,99,132,0.2)",
+							borderColor: "rgba(255,99,132,1)",
+							pointBackgroundColor: "rgba(255,99,132,1)",
+							pointBorderColor: "#fff",
+							pointHoverBackgroundColor: "#fff",
+							pointHoverBorderColor: "rgba(179,181,198,1)",
+							pointStyle: "circle",
+							radius: 6,
+							pointRadius: 6,
+							pointHoverRadius: 6,
+							pointHitRadius: 6
+						}
+					]
+				},
+				options: { 
+						elements: {
+							line: {
+								borderColor: 'white',
+								borderWidth: 3
+							}
+						},
+						tooltips: {
+							backgroundColor: 'rgba(0, 0, 0, 0.6)',
+							titleFontSize: 16,
+							bodyFontSize: 16,
+							footerFontSize: 30,
+							xPadding: 20,
+							yPadding: 20,
+							titleFontFamily: "'Meiryo','微軟正黑體','Tahoma'",
+							bodyFontFamily: "'Meiryo','微軟正黑體','Tahoma'"
+						},
+						legend: {
+							display:false
+						},
+						scale: {
+							angleLines: {
+								color: 'rgba(255, 255, 255, 0.1)'
+							},
+							pointLabels :{
+								fontColor: 'white',
+								fontSize: 16,
+								fontFamily: "'Meiryo','微軟正黑體','Tahoma'"
+							},
+							gridLines: {
+								color: 'rgba(255, 255, 255, 0.2)'
+							},
+							ticks: {
+								display: false,
+								beginAtZero: true,
+								max: 10,
+								maxTicksLimit: 6
+							},
+							scaleLabel: {
+								display: true,
+								labelString: "a",
+								fontSize: 30
+							}
+							
+						}
+				}
+			});
+
+			</script>
+			</div>
+		</td>
+		<td bgcolor="#000000" width="80">作為隊長</td><td bgcolor="#000000" class="poll"><select id="poll1" name="poll1" onChange="vote(1);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr align="center"><td bgcolor="#000000" width="80">作為隊員</td><td bgcolor="#000000" class="poll"><select id="poll2" name="poll2" onChange="vote(2);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr align="center"><td bgcolor="#000000" width="80">作為輔助</td><td bgcolor="#000000" class="poll">不可輔助</td></tr><tr align="center"><td bgcolor="#000000" width="80">單人配合</td><td bgcolor="#000000" class="poll"><select id="poll4" name="poll4" onChange="vote(4);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr align="center"><td bgcolor="#000000" width="80">協力配合</td><td bgcolor="#000000" class="poll"><select id="poll5" name="poll5" onChange="vote(5);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr align="center"><td bgcolor="#000000" width="80">美觀度</td><td bgcolor="#000000" class="poll"><select id="poll6" name="poll6" onChange="vote(6);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr align="center"><td bgcolor="#000000" width="80">平均得分</td><td bgcolor="#000000" id="AvgScore">1</td></tr></table>
+
+
+<br />
+<table width=720 border=0 cellpadding=5 cellspacing=1 align="center"><tr align=center><td bgcolor="#000000" align=left colspan="3" style="padding:10px" class="head"><span style="font-size:18px">參考配搭</span> - 以下隨機列出其他玩家使用該寵物無石通關的隊伍</td></tr><tr align=center bgcolor="#000000"><td width="100" style="font-size:10px"><a href="stage/シェヘラザード降臨！" class="tooltip" title="シェヘラザード降臨！<br />静夜の語り手 壊滅級"><img src="https://oi1296.photobucket.com/albums/ag18/skyozora/stage/5173s_zpshgvejicb.png" width="100"></a></td><td><a href="pets/5189" class="tooltip" title="5189 - 千刃龍"><img src="https://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/5189_zpsvvrlbdap.png" width="55" height="55" $team[L2][0]</a><a href="pets/4740" class="tooltip" title="4740 - 極醒之執行者・米達倫"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4740_zpsm23f37uf.png" width="55" height="55" $team[L2][0]</a><a href="pets/4674" class="tooltip" title="4674 - 暗黑昴"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4674_zpskg49gvom.png" width="55" height="55" style="background-color:#FFFF00; padding:5px"$team[L2][0]</a><a href="pets/4127" class="tooltip" title="4127 - 遊步之夜月神・月讀"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4127_zpsa0ydbsiz.png" width="55" height="55" $team[L2][0]</a><a href="pets/3264" class="tooltip" title="3264 - 起源神・奧丁龍・光槍型"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3264_zpshhjevlxp.png" width="55" height="55" $team[L2][0]</a><a href="pets/5010" class="tooltip" title="5010 - 英雄王・吉爾伽美什"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/5010_zpsr82w57hv.png" width="55" height="55" $team[L2][0]</a></td><td><a href="team/114517/" target="_blank"><img src="images/detail.png" width="32" height="32" /></a></td></tr></table><br />
 
 <table width="720" border="0" cellpadding="0" cellspacing="1" align="center">
 	<tr>
@@ -1074,7 +1163,7 @@ function updateTO(element) {
       <td align="left">
       Graphics © Copyright by Gungho Online Entertainment, Inc.<br>
       <a href="http://pad.skyozora.com">戰友系統及資訊網</a> 由 Sky C. 持有，介面設計 Naldo W.<br>
-      如對本網站有任何查詢，歡迎電郵至 <a href="/cdn-cgi/l/email-protection#82ebece4edc2f1e9fbedf8edf0e3ace1edef"><span class="__cf_email__" data-cfemail="147d7a727b54677f6d7b6e7b66753a777b79">[email&#160;protected]</span></a>
+      如對本網站有任何查詢，歡迎至 <a href="https://www.facebook.com/PuzzleDragonsSite/">Facebook 專頁</a> 聯絡
       </td>
       
       <td align="right">
@@ -1100,5 +1189,5 @@ function updateTO(element) {
 
 
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</body>
 </html>

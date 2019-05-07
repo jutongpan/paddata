@@ -192,6 +192,8 @@ $(function() {
 						</ul>
 					</li>
 
+					<li><a href="/寶珠外觀/">寶珠外觀</a></li>
+					<li><a href="/近期實裝的新寵物/" style="color:#ffff00">近期實裝的新寵物</a></li>
 					<li><a href="/pets/statistics/" style="color:#ffff00">寵物排名</a></li>
 				</ul>
 			</li>
@@ -378,8 +380,8 @@ function vote(e){
       alert('Ajax request 發生錯誤');
     },
     success: function(response) {
-      $('#score'+e).html(response);
-      $('#score'+e).fadeIn();
+      $('#scoregraph').html(response);
+      $('#scoregraph').fadeIn();
     }
   });
   $.ajax({
@@ -390,8 +392,8 @@ function vote(e){
       alert('Ajax request 發生錯誤');
     },
     success: function(response) {
-      $('#score7').html(response);
-      $('#score7').fadeIn();
+      $('#AvgScore').html(response);
+      $('#AvgScore').fadeIn();
     }
   });
 }
@@ -528,7 +530,7 @@ function vote(e){
 			<table width="360" border="0" style="table-layout:fixed">
 				<tr>
 					<td width="46">LV.1</td>
-					<td width="90">HP: 1106</td>
+					<td width="80">HP: 1106</td>
 					<td>攻擊力: 756</td>
 					<td>回復力: 335</td>
 				</tr>
@@ -545,7 +547,7 @@ function vote(e){
 			<table width="360" border="0" style="table-layout:fixed">
 				<tr>
 					<td width="46">LV.99</td>
-					<td width="90">HP: 2765</td>
+					<td width="80">HP: 2765</td>
 					<td>攻擊力: 1361</td>
 					<td>回復力: 603</td>
 				</tr>
@@ -564,7 +566,7 @@ function vote(e){
 			<table width="360" border="0" style="table-layout:fixed">
 				<tr>
 					<td width="46">LV.110</td>
-					<td width="90">HP: 3318</td>
+					<td width="80">HP: 3318</td>
 					<td>攻擊力: 1633</td>
 					<td>回復力: 724</td>
 				</tr>
@@ -587,7 +589,7 @@ function vote(e){
 			<table width="360" border="0" style="table-layout:fixed">
 				<tr>
 					<td width="46"><div id="lv">LV.1</div></td>
-					<td width="90"><div id="hp">HP: 1106</div></td>
+					<td width="80"><div id="hp">HP: 1106</div></td>
 					<td><div id="atk">攻擊力: 756</div></td>
 					<td><div id="re">回復力: 335</div></td>
 				</tr>
@@ -933,12 +935,98 @@ p.EvoName {
 
 <table width="720" border="0" cellpadding="10" cellspacing="1" align="center">
 	<tr align="center" bgcolor="#000000">
-		<td align="left" colspan="3" class="head"><span style="font-size:18px">玩家評分</span> <div id="Vote" style="display:inline"></div></td>
+		<td align="left" class="head"><span style="font-size:18px">玩家評分</span> ＊美觀度以外的五個評分項目只會顯示最近90天的評分結果</td>
+		<td align="center" colspan="2">你的評分</td>
 	</tr>
-<tr><td bgcolor=#000000 width="100" align="center">主動技能</td><td bgcolor=#000000 width="500"><div id="score1"><a style="text-decoration:none" class="tooltip" title="共有18人對此項目評分"><span style="border-radius:3px; width: 242px; background:#fe0000; padding:3px; color:#000000; display: inline-block"> </span> 6.06</a></div></td><td bgcolor=#000000 align="center" class="poll"><select id="poll1" name="poll1" onChange="vote(1);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr><td bgcolor=#000000 width="100" align="center">隊長技能</td><td bgcolor=#000000 width="500"><div id="score2"><a style="text-decoration:none" class="tooltip" title="共有17人對此項目評分"><span style="border-radius:3px; width: 202px; background:#ffb452; padding:3px; color:#000000; display: inline-block"> </span> 5.06</a></div></td><td bgcolor=#000000 align="center" class="poll"><select id="poll2" name="poll2" onChange="vote(2);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr><td bgcolor=#000000 width="100" align="center">覺醒技能</td><td bgcolor=#000000 width="500"><div id="score3"><a style="text-decoration:none" class="tooltip" title="共有17人對此項目評分"><span style="border-radius:3px; width: 212px; background:#ffff20; padding:3px; color:#000000; display: inline-block"> </span> 5.29</a></div></td><td bgcolor=#000000 align="center" class="poll"><select id="poll3" name="poll3" onChange="vote(3);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr><td bgcolor=#000000 width="100" align="center">隊伍配合(單人)</td><td bgcolor=#000000 width="500"><div id="score4"><a style="text-decoration:none" class="tooltip" title="共有15人對此項目評分"><span style="border-radius:3px; width: 232px; background:#01fe01; padding:3px; color:#000000; display: inline-block"> </span> 5.80</a></div></td><td bgcolor=#000000 align="center" class="poll"><select id="poll4" name="poll4" onChange="vote(4);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr><td bgcolor=#000000 width="100" align="center">隊伍配合(協力)</td><td bgcolor=#000000 width="500"><div id="score6"><a style="text-decoration:none" class="tooltip" title="共有16人對此項目評分"><span style="border-radius:3px; width: 228px; background:#c4e9ff; padding:3px; color:#000000; display: inline-block"> </span> 5.69</a></div></td><td bgcolor=#000000 align="center" class="poll"><select id="poll6" name="poll6" onChange="vote(6);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr><td bgcolor=#000000 width="100" align="center">美觀度</td><td bgcolor=#000000 width="500"><div id="score5"><a style="text-decoration:none" class="tooltip" title="共有18人對此項目評分"><span style="border-radius:3px; width: 218px; background:#3988ff; padding:3px; color:#000000; display: inline-block"> </span> 5.44</a></div></td><td bgcolor=#000000 align="center" class="poll"><select id="poll5" name="poll5" onChange="vote(5);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr><td bgcolor=#000000 width="100" align="center"><a class="tooltip" title="計算方法 = 6個評分項目/6<br />如該寵物不足6個評分項目會令整體分數下降">整體評分 (?)</a></td><td bgcolor=#000000 colspan="2"><div id="score7"><span style="border-radius:3px; width: 222px; background:#d34eff; padding:3px; color:#000000; display: inline-block"> </span> 5.56</div></td></td></tr></table>
+	
+	<tr align="center">
+		<td bgcolor="#000000" width="500" rowspan="7">
+		
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js"></script>
+
+			<div style="width:400px"  id="scoregraph">
+			<canvas id="myChart"></canvas>
+			</div>
+			<script>
+			var ctx = document.getElementById("myChart");
+			var myChart = new Chart(ctx, {
+				type: 'radar',
+				data: {
+					labels: ["作為隊長", "作為隊員", "作為輔助", "單人配合", "協力配合", "美觀度"],
+					datasets: [
+						{
+							label: "評分",
+							data: [0, 0, 0, 0, 0, 5.44],
+							backgroundColor: "rgba(255,99,132,0.2)",
+							borderColor: "rgba(255,99,132,1)",
+							pointBackgroundColor: "rgba(255,99,132,1)",
+							pointBorderColor: "#fff",
+							pointHoverBackgroundColor: "#fff",
+							pointHoverBorderColor: "rgba(179,181,198,1)",
+							pointStyle: "circle",
+							radius: 6,
+							pointRadius: 6,
+							pointHoverRadius: 6,
+							pointHitRadius: 6
+						}
+					]
+				},
+				options: { 
+						elements: {
+							line: {
+								borderColor: 'white',
+								borderWidth: 3
+							}
+						},
+						tooltips: {
+							backgroundColor: 'rgba(0, 0, 0, 0.6)',
+							titleFontSize: 16,
+							bodyFontSize: 16,
+							footerFontSize: 30,
+							xPadding: 20,
+							yPadding: 20,
+							titleFontFamily: "'Meiryo','微軟正黑體','Tahoma'",
+							bodyFontFamily: "'Meiryo','微軟正黑體','Tahoma'"
+						},
+						legend: {
+							display:false
+						},
+						scale: {
+							angleLines: {
+								color: 'rgba(255, 255, 255, 0.1)'
+							},
+							pointLabels :{
+								fontColor: 'white',
+								fontSize: 16,
+								fontFamily: "'Meiryo','微軟正黑體','Tahoma'"
+							},
+							gridLines: {
+								color: 'rgba(255, 255, 255, 0.2)'
+							},
+							ticks: {
+								display: false,
+								beginAtZero: true,
+								max: 10,
+								maxTicksLimit: 6
+							},
+							scaleLabel: {
+								display: true,
+								labelString: "a",
+								fontSize: 30
+							}
+							
+						}
+				}
+			});
+
+			</script>
+			</div>
+		</td>
+		<td bgcolor="#000000" width="80">作為隊長</td><td bgcolor="#000000" class="poll"><select id="poll1" name="poll1" onChange="vote(1);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr align="center"><td bgcolor="#000000" width="80">作為隊員</td><td bgcolor="#000000" class="poll"><select id="poll2" name="poll2" onChange="vote(2);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr align="center"><td bgcolor="#000000" width="80">作為輔助</td><td bgcolor="#000000" class="poll">不可輔助</td></tr><tr align="center"><td bgcolor="#000000" width="80">單人配合</td><td bgcolor="#000000" class="poll"><select id="poll4" name="poll4" onChange="vote(4);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr align="center"><td bgcolor="#000000" width="80">協力配合</td><td bgcolor="#000000" class="poll"><select id="poll5" name="poll5" onChange="vote(5);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr align="center"><td bgcolor="#000000" width="80">美觀度</td><td bgcolor="#000000" class="poll"><select id="poll6" name="poll6" onChange="vote(6);"><option value="">-</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr><tr align="center"><td bgcolor="#000000" width="80">平均得分</td><td bgcolor="#000000" id="AvgScore">0.91</td></tr></table>
+
+
 <br />
-<table width=720 border=0 cellpadding=5 cellspacing=1 align="center"><tr align=center><td bgcolor=#000000 align=left colspan="3" style="padding:10px" class="head"><span style="font-size:18px">參考配搭</span> - 以下隨機列出其他玩家使用該寵物無石通關的隊伍</td></tr><tr align=center bgcolor=#000000><td width="100" style="font-size:10px"><a href="stage/エイル降臨！" class="tooltip" title="エイル降臨！<br />医女神 壊滅級"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/stage/4635s_zpswrbj0dm8.png" width="100"></a></td><td><a href="pets/4413" class="tooltip" title="4413 - 冰華之大魔女・莉邪"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4413_zpshtuynkoh.png" width="55" height="55" $team[L2][0]</a><a href="pets/3264" class="tooltip" title="3264 - 起源神・奧丁龍・光槍型"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3264_zpshhjevlxp.png" width="55" height="55" $team[L2][0]</a><a href="pets/1191" class="tooltip" title="1191 - 紅焰舞巫女・望月千代女"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/1191_zps6jkxh6jw.png " width="55" height="55" $team[L2][0]</a><a href="pets/3389" class="tooltip" title="3389 - 轉生月讀"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3389_zpse832mgle.png" width="55" height="55" $team[L2][0]</a><a href="pets/4138" class="tooltip" title="4138 - 滅盡龍"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4138_zpsnkcliv0n.png" width="55" height="55" $team[L2][0]</a><a href="pets/4603" class="tooltip" title="4603 - 晴空號船長、尤依菈"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4603_zpswc2nix3g.png" width="55" height="55" $team[L2][0]</a></td><td><a href="team/112284/" target="_blank"><img src="images/detail.png" width="32" height="32" /></a></td></tr><tr align=center bgcolor=#000000><td width="100" style="font-size:10px"><a href="stage/11月のクエスト 上級者向け" class="tooltip" title="11月のクエスト 上級者向け<br />チャレンジLv10"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/stage/2528s_zpsnkcsfc9j.png
-" width="100"></a></td><td><a href="pets/4835" class="tooltip" title="4835 - 白鳥之戰姬神・瓦爾奇琳 -CIEL-"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4835_zpsmqvsjkxq.png" width="55" height="55" $team[L2][0]</a><a href="pets/3246" class="tooltip" title="3246 - 迦梨【填色比賽】"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3246_zps9tomybww.png" width="55" height="55" style="background-color:#FFFF00; padding:5px"$team[L2][0]</a><a href="pets/2763" class="tooltip" title="2763 - 莫古利"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/2763_zpss7zk7vls.png" width="55" height="55" $team[L2][0]</a><a href="pets/687" class="tooltip" title="687 - 閃光波利王"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/687_zpsq9hxj3n9.png " width="55" height="55" $team[L2][0]</a><a href="pets/3264" class="tooltip" title="3264 - 起源神・奧丁龍・光槍型"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3264_zpshhjevlxp.png" width="55" height="55" $team[L2][0]</a><a href="pets/4835" class="tooltip" title="4835 - 白鳥之戰姬神・瓦爾奇琳 -CIEL-"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4835_zpsmqvsjkxq.png" width="55" height="55" $team[L2][0]</a></td><td><a href="team/113127/" target="_blank"><img src="images/detail.png" width="32" height="32" /></a></td></tr><tr align=center bgcolor=#000000><td width="100" style="font-size:10px"><a href="stage/10月のクエスト 上級者向け" class="tooltip" title="10月のクエスト 上級者向け<br />チャレンジLv10【落ちコンなし】"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/stage/2391s_zpsy8dvvjkc.png" width="100"></a></td><td><a href="pets/3337" class="tooltip" title="3337 - 焦陽的炎柱神・阿蒙"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/3337_zpsonjifwjr.png" width="55" height="55" $team[L2][0]</a><a href="pets/3910" class="tooltip" title="3910 - 瞬刻的白龍喚士・索妮亞＝艾璐"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/3910_zpssp0sl42z.png" width="55" height="55" $team[L2][0]</a><a href="pets/3264" class="tooltip" title="3264 - 起源神・奧丁龍・光槍型"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3264_zpshhjevlxp.png" width="55" height="55" $team[L2][0]</a><a href="pets/3663" class="tooltip" title="3663 - 鏖魔角龍"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3663_zps9rvg7lou.png" width="55" height="55" $team[L2][0]</a><a href="pets/3246" class="tooltip" title="3246 - 迦梨【填色比賽】"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3246_zps9tomybww.png" width="55" height="55" style="background-color:#FFFF00; padding:5px"$team[L2][0]</a><a href="pets/3337" class="tooltip" title="3337 - 焦陽的炎柱神・阿蒙"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/3337_zpsonjifwjr.png" width="55" height="55" $team[L2][0]</a></td><td><a href="team/112999/" target="_blank"><img src="images/detail.png" width="32" height="32" /></a></td></tr><tr align=center bgcolor=#000000><td width="100" style="font-size:10px"><a href="stage/6月のクエスト 上級者向け" class="tooltip" title="6月のクエスト 上級者向け<br />チャレンジLv7"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/stage/1252s_zpsvvquioru.png" width="100"></a></td><td><a href="pets/4366" class="tooltip" title="4366 - 白陽之裁定神・沙瑪什"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4366_zpsy519dpvu.png" width="55" height="55" $team[L2][0]</a><a href="pets/3270" class="tooltip" title="3270 - 轉生哈帝斯"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3270_zpshvdx72b0.png" width="55" height="55" $team[L2][0]</a><a href="pets/3246" class="tooltip" title="3246 - 迦梨【填色比賽】"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3246_zps9tomybww.png" width="55" height="55" style="background-color:#FFFF00; padding:5px"$team[L2][0]</a><a href="pets/2927" class="tooltip" title="2927 - 白光炎隼神的裝甲Ｘ龍喚士・ACE"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/2927_zpsazvjirtt.png" width="55" height="55" $team[L2][0]</a><a href="pets/3834" class="tooltip" title="3834 - 空都的守護神・雅典娜＝赫利奧斯"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3834_zpsndvykdoz.png" width="55" height="55" $team[L2][0]</a><a href="pets/4366" class="tooltip" title="4366 - 白陽之裁定神・沙瑪什"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4366_zpsy519dpvu.png" width="55" height="55" $team[L2][0]</a></td><td><a href="team/112084/" target="_blank"><img src="images/detail.png" width="32" height="32" /></a></td></tr><tr align=center bgcolor=#000000><td width="100" style="font-size:10px"><a href="stage/リベルタス降臨！" class="tooltip" title="リベルタス降臨！<br />自由神 壊滅級"><img src="https://i1296.photobucket.com/albums/ag18/skyozora/stage/5057s_zps4vrumtdc.png" width="100"></a></td><td><a href="pets/4902" class="tooltip" title="4902 - 極醒之衛瓶神・席雅托"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4902_zpsn45rswwt.png" width="55" height="55" $team[L2][0]</a><a href="pets/4267" class="tooltip" title="4267 - 轉生亞蒙"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4267_zpsetgklekg.png" width="55" height="55" $team[L2][0]</a><a href="pets/3246" class="tooltip" title="3246 - 迦梨【填色比賽】"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3246_zps9tomybww.png" width="55" height="55" style="background-color:#FFFF00; padding:5px"$team[L2][0]</a><a href="pets/4581" class="tooltip" title="4581 - 覺醒甘寧"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4581_zpswkul6qex.png" width="55" height="55" $team[L2][0]</a><a href="pets/3386" class="tooltip" title="3386 - 轉生八歧大蛇"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3386_zpsudhrm47l.png" width="55" height="55" $team[L2][0]</a><a href="pets/4902" class="tooltip" title="4902 - 極醒之衛瓶神・席雅托"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4902_zpsn45rswwt.png" width="55" height="55" $team[L2][0]</a></td><td><a href="team/113929/" target="_blank"><img src="images/detail.png" width="32" height="32" /></a></td></tr></table><br />
+<table width=720 border=0 cellpadding=5 cellspacing=1 align="center"><tr align=center><td bgcolor="#000000" align=left colspan="3" style="padding:10px" class="head"><span style="font-size:18px">參考配搭</span> - 以下隨機列出其他玩家使用該寵物無石通關的隊伍</td></tr><tr align=center bgcolor="#000000"><td width="100" style="font-size:10px"><a href="stage/ヴォルスーン降臨！" class="tooltip" title="ヴォルスーン降臨！<br />海龍王 超絶地獄級"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/stage/1841s_zpsf9hynrhj.png" width="100"></a></td><td><a href="pets/3268" class="tooltip" title="3268 - 淨光之天陽神・阿頓"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3268_zpsqymsbx6a.png" width="55" height="55" $team[L2][0]</a><a href="pets/440" class="tooltip" title="440 - 超・群馬縣"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/440_zpskkqupgip.png" width="55" height="55" $team[L2][0]</a><a href="pets/1747" class="tooltip" title="1747 - 綺羅之秘女神・迦梨"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/1747_zpsxo6gupmi.png" width="55" height="55" $team[L2][0]</a><a href="pets/3246" class="tooltip" title="3246 - 迦梨【填色比賽】"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3246_zps9tomybww.png" width="55" height="55" style="background-color:#FFFF00; padding:5px"$team[L2][0]</a><a href="pets/2325" class="tooltip" title="2325 - 覺醒月讀"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/2325_zps04bz3vom.png " width="55" height="55" $team[L2][0]</a><a href="pets/3273" class="tooltip" title="3273 - 轉生拉"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3273_zpsi5gekoj5.png" width="55" height="55" $team[L2][0]</a></td><td><a href="team/106170/" target="_blank"><img src="images/detail.png" width="32" height="32" /></a></td></tr><tr align=center bgcolor="#000000"><td width="100" style="font-size:10px"><a href="stage/6月のクエスト 上級者向け" class="tooltip" title="6月のクエスト 上級者向け<br />チャレンジLv7"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/stage/2968s_zps64h4tns7.png" width="100"></a></td><td><a href="pets/4366" class="tooltip" title="4366 - 白陽之裁定神・沙瑪什"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4366_zpsy519dpvu.png" width="55" height="55" $team[L2][0]</a><a href="pets/3270" class="tooltip" title="3270 - 轉生哈帝斯"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3270_zpshvdx72b0.png" width="55" height="55" $team[L2][0]</a><a href="pets/3246" class="tooltip" title="3246 - 迦梨【填色比賽】"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3246_zps9tomybww.png" width="55" height="55" style="background-color:#FFFF00; padding:5px"$team[L2][0]</a><a href="pets/2927" class="tooltip" title="2927 - 白光炎隼神的裝甲Ｘ龍喚士・ACE"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/2927_zpsazvjirtt.png" width="55" height="55" $team[L2][0]</a><a href="pets/3834" class="tooltip" title="3834 - 空都的守護神・雅典娜＝赫利奧斯"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3834_zpsndvykdoz.png" width="55" height="55" $team[L2][0]</a><a href="pets/4366" class="tooltip" title="4366 - 白陽之裁定神・沙瑪什"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4366_zpsy519dpvu.png" width="55" height="55" $team[L2][0]</a></td><td><a href="team/112084/" target="_blank"><img src="images/detail.png" width="32" height="32" /></a></td></tr><tr align=center bgcolor="#000000"><td width="100" style="font-size:10px"><a href="stage/異聖の天上宮殿" class="tooltip" title="異聖の天上宮殿<br />九階"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/stage/2892s_zpsofjokqfy.png" width="100"></a></td><td><a href="pets/3490" class="tooltip" title="3490 - 轉生朔夜"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3490_zpsp2jvbv81.png" width="55" height="55" $team[L2][0]</a><a href="pets/3618" class="tooltip" title="3618 - 陸奥圓明流繼承者・陸奥九十九"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3618_zpsbomsjwhr.png" width="55" height="55" $team[L2][0]</a><a href="pets/3697" class="tooltip" title="3697 - 覺醒立花誾千代"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3697_zpswtaxh1ry.png" width="55" height="55" $team[L2][0]</a><a href="pets/3246" class="tooltip" title="3246 - 迦梨【填色比賽】"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3246_zps9tomybww.png" width="55" height="55" style="background-color:#FFFF00; padding:5px"$team[L2][0]</a><a href="pets/3454" class="tooltip" title="3454 - 煌拳聖命神・哈索爾"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3454_zpsqxsv3z4e.png" width="55" height="55" $team[L2][0]</a><a href="pets/3490" class="tooltip" title="3490 - 轉生朔夜"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3490_zpsp2jvbv81.png" width="55" height="55" $team[L2][0]</a></td><td><a href="team/109043/" target="_blank"><img src="images/detail.png" width="32" height="32" /></a></td></tr><tr align=center bgcolor="#000000"><td width="100" style="font-size:10px"><a href="stage/リベルタス降臨！" class="tooltip" title="リベルタス降臨！<br />自由神 壊滅級"><img src="https://i1296.photobucket.com/albums/ag18/skyozora/stage/5057s_zps4vrumtdc.png" width="100"></a></td><td><a href="pets/4902" class="tooltip" title="4902 - 極醒之衛瓶神・席雅托"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4902_zpsn45rswwt.png" width="55" height="55" $team[L2][0]</a><a href="pets/4267" class="tooltip" title="4267 - 轉生亞蒙"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4267_zpsetgklekg.png" width="55" height="55" $team[L2][0]</a><a href="pets/3246" class="tooltip" title="3246 - 迦梨【填色比賽】"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3246_zps9tomybww.png" width="55" height="55" style="background-color:#FFFF00; padding:5px"$team[L2][0]</a><a href="pets/4581" class="tooltip" title="4581 - 覺醒甘寧"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4581_zpswkul6qex.png" width="55" height="55" $team[L2][0]</a><a href="pets/3386" class="tooltip" title="3386 - 轉生八歧大蛇"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3386_zpsudhrm47l.png" width="55" height="55" $team[L2][0]</a><a href="pets/4902" class="tooltip" title="4902 - 極醒之衛瓶神・席雅托"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4902_zpsn45rswwt.png" width="55" height="55" $team[L2][0]</a></td><td><a href="team/113929/" target="_blank"><img src="images/detail.png" width="32" height="32" /></a></td></tr><tr align=center bgcolor="#000000"><td width="100" style="font-size:10px"><a href="stage/11月のクエスト 上級者向け" class="tooltip" title="11月のクエスト 上級者向け<br />チャレンジLv10"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/stage/2716s_zpsm1uzsay6.png" width="100"></a></td><td><a href="pets/4835" class="tooltip" title="4835 - 白鳥之戰姬神・瓦爾奇琳 -CIEL-"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4835_zpsmqvsjkxq.png" width="55" height="55" $team[L2][0]</a><a href="pets/3246" class="tooltip" title="3246 - 迦梨【填色比賽】"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3246_zps9tomybww.png" width="55" height="55" style="background-color:#FFFF00; padding:5px"$team[L2][0]</a><a href="pets/2763" class="tooltip" title="2763 - 莫古利"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/2763_zpss7zk7vls.png" width="55" height="55" $team[L2][0]</a><a href="pets/687" class="tooltip" title="687 - 閃光波利王"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/687_zpsq9hxj3n9.png " width="55" height="55" $team[L2][0]</a><a href="pets/3264" class="tooltip" title="3264 - 起源神・奧丁龍・光槍型"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon/3264_zpshhjevlxp.png" width="55" height="55" $team[L2][0]</a><a href="pets/4835" class="tooltip" title="4835 - 白鳥之戰姬神・瓦爾奇琳 -CIEL-"><img src="http://i1296.photobucket.com/albums/ag18/skyozora/pets_icon2/4835_zpsmqvsjkxq.png" width="55" height="55" $team[L2][0]</a></td><td><a href="team/113127/" target="_blank"><img src="images/detail.png" width="32" height="32" /></a></td></tr></table><br />
 
 <table width="720" border="0" cellpadding="0" cellspacing="1" align="center">
 	<tr>
@@ -1055,7 +1143,7 @@ function updateTO(element) {
       <td align="left">
       Graphics © Copyright by Gungho Online Entertainment, Inc.<br>
       <a href="http://pad.skyozora.com">戰友系統及資訊網</a> 由 Sky C. 持有，介面設計 Naldo W.<br>
-      如對本網站有任何查詢，歡迎電郵至 <a href="/cdn-cgi/l/email-protection#7a13141c153a091103150015081b54191517"><span class="__cf_email__" data-cfemail="88e1e6eee7c8fbe3f1e7f2e7fae9a6ebe7e5">[email&#160;protected]</span></a>
+      如對本網站有任何查詢，歡迎至 <a href="https://www.facebook.com/PuzzleDragonsSite/">Facebook 專頁</a> 聯絡
       </td>
       
       <td align="right">
@@ -1081,5 +1169,5 @@ function updateTO(element) {
 
 
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</body>
 </html>
