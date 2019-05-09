@@ -4,12 +4,17 @@ library(rvest)
 library(DBI)
 library(RSQLite)
 
-setwd("//Users/yawenliang/Documents/paddata")
+if (Sys.info()[["nodename"]] == "JUTONG-X1C") {
+  setwd("C:/Users/Jutong/Documents/paddata")
+} else {
+  setwd("//Users/yawenliang/Documents/paddata")
+}
 
 # Get active skill type list
 
 url <- 'http://pad.skyozora.com/skill/%E4%B8%BB%E5%8B%95%E6%8A%80%E8%83%BD%E4%B8%80%E8%A6%BD/'
-webpage <- read_html(url)
+# webpage <- read_html(url)
+webpage <- read_html("raw/ActiveSkillType.html")
 webnodes1 <- html_nodes(webpage, 'h3')
 webnodes2 <- html_nodes(webpage, 'table')
 
@@ -68,4 +73,4 @@ ActiveSkillType.dt<- ActiveSkillType.dt[ , ActiveSkillName := NULL]
 
 dbExecute(conn, "DELETE FROM ActiveSkillType")
 dbWriteTable(conn, "ActiveSkillType", ActiveSkillType.dt, append = T)
-dbDisconnect(conn) 
+dbDisconnect(conn)
