@@ -6,6 +6,8 @@ library(RSQLite)
 
 if (Sys.info()[["nodename"]] == "JUTONG-X1C") {
   setwd("C:/Users/Jutong/Documents/paddata")
+} else if (Sys.info()[["nodename"]] == "jpan-personal") {
+  setwd("/home/jpan/paddata")
 } else {
   setwd("//Users/yawenliang/Documents/paddata")
 }
