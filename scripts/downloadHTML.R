@@ -2,7 +2,13 @@ library(data.table)
 library(rvest)
 library(stringr)
 
-setwd("C:/Users/Jutong/Documents/paddata")
+if (Sys.info()[["nodename"]] == "JUTONG-X1C") {
+  setwd("C:/Users/Jutong/Documents/paddata")
+} else if (Sys.info()[["nodename"]] == "MU-JPAN") {
+  setwd("C:/Users/JPan/Documents/repo/paddata")
+} else if (Sys.info()[["nodename"]] == "jpan-personal") {
+  setwd("/home/jpan/paddata")
+}
 
 extractMonIdsToScrape <- function(link) {
   webpage <- read_html(link)
