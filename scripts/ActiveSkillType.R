@@ -70,6 +70,8 @@ setnames(ActiveSkillType.dt, "value", "ActiveSkillType")
 setcolorder(ActiveSkillType.dt, c("ActiveSkillId", "ActiveSkillType"))
 ActiveSkillType.dt<- ActiveSkillType.dt[ , ActiveSkillName := NULL]
 
+## Ad-hoc fix for a bug on 戰友網
+ActiveSkillType.dt[ActiveSkillType == "", ActiveSkillType := "解除無法消除寶珠狀態"]
 
 # Write the data into database
 
