@@ -13,6 +13,9 @@ if (Sys.info()[["nodename"]] == "JUTONG-X1C") {
   setwd("/home/jpan/paddata")
 }
 
+updateMode <- TRUE
+if (!exists(id.vt)) updateMode <- FALSE
+
 con <- dbConnect(SQLite(), "padmonster.sqlite3")
 for (table in dbListTables(con)) {
   assign(paste0(table, ".dt"), setDT(dbReadTable(con, table)))
@@ -43,8 +46,10 @@ readMonsterPage <- function(MonsterId) {
   webpage
 }
 
-filenames <- list.files("raw/", pattern = "^[0-9]+.html$")
-id.vt <- 1:max(as.integer(gsub(x = filenames, pattern = ".html", replacement = "")))
+if (!updateMode) {
+  filenames <- list.files("raw/", pattern = "^[0-9]+.html$")
+  id.vt <- 1:max(as.integer(gsub(x = filenames, pattern = ".html", replacement = "")))
+}
 webpage.ls <- lapply(id.vt, readMonsterPage)
 names(webpage.ls) <- id.vt
 webpage.ls[is.na(webpage.ls)] <- NULL
@@ -190,6 +195,11 @@ parseMonData <- function(webpage) {
 
 monData.ls <- pblapply(webpage.ls, parseMonData)
 
+if (updateMode) {
+  monData.ls_old <- readRDS(file = "monData.rds")
+  monData.ls <- modifyList(x = monData.ls_old, val = monData.ls)
+}
+
 dropNonAtomic <- function(l) {
   l$Type <- NULL
   l$AwokenSkill <- NULL
@@ -293,3 +303,5 @@ dbExecute(con, "DELETE FROM Evolution")
 dbWriteTable(con, "Evolution", evo.dt, append = T)
 
 dbDisconnect(con)
+
+saveRDS(monData.ls, file = "monData.rds")
