@@ -233,9 +233,11 @@ setcolorder(AwokenSkillRelation2.dt, c("MonsterId", "AwokenSkillId", "Position",
 setorder(AwokenSkillRelation2.dt, MonsterId, Position)
 AwokenSkillRelation2.dt[, Id := .I]
 
-ActiveSkill2.dt <- unique(
-  monData.dt[, c("ActiveSkillName", "ActiveSkillDescription", "MinCd", "MaxCd")],
-  by = "ActiveSkillName")
+ActiveSkill2.dt <- monData.dt[, c("ActiveSkillName", "ActiveSkillDescription", "MinCd", "MaxCd")]
+## Some evo materials share same skill but their MinCd = MaxCd because they cannot level up
+## Always use the minimum CD across monsters with the same skill
+ActiveSkill2.dt[, MinCd := min(MinCd), by = ActiveSkillName]
+ActiveSkill2.dt <- unique(ActiveSkill2.dt, by = "ActiveSkillName")
 ActiveSkill2.dt[, ActiveSkillDescription := gsub(x = ActiveSkillDescription,
     pattern = "images/drops", replacement = "img/Orb")]
 ActiveSkill2.dt[, ActiveSkillDescription := gsub(x = ActiveSkillDescription,
