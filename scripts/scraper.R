@@ -14,7 +14,7 @@ if (Sys.info()[["nodename"]] == "JUTONG-X1C") {
 }
 
 updateMode <- TRUE
-if (!exists(id.vt)) updateMode <- FALSE
+if (!exists("id.vt")) updateMode <- FALSE
 
 con <- dbConnect(SQLite(), "padmonster.sqlite3")
 for (table in dbListTables(con)) {

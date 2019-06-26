@@ -20,7 +20,7 @@ extractMonIdsToScrape <- function(link) {
 
 vt_link <- c(
   "http://pad.skyozora.com/",
-  "http://pad.skyozora.com/news/%EF%BC%8806/07%E5%AF%A6%E8%A3%9D%EF%BC%89%E9%83%A8%E4%BB%BD%E5%90%88%E4%BD%9C%E8%A7%92%E8%89%B2%E8%BF%BD%E5%8A%A0%E9%80%B2%E5%8C%96%E5%BD%A2%E6%85%8B%EF%BC%86PowerUp%EF%BC%81"
+  "http://pad.skyozora.com/news/%E6%96%B0%E9%99%8D%E8%87%A8%E5%9C%B0%E4%B8%8B%E5%9F%8E%E3%80%8C%E3%82%A8%E3%83%AA%E3%82%B9%E9%99%8D%E8%87%A8%EF%BC%81%E3%80%90%E5%85%A8%E5%B1%9E%E6%80%A7%E5%BF%85%E9%A0%88%E3%80%91%E3%80%8D%E7%99%BB%E5%A0%B4!!"
 )
 
 id.vt <- unique(unlist(sapply(vt_link, extractMonIdsToScrape), use.names = F))

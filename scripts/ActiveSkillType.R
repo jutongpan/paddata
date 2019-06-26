@@ -4,8 +4,8 @@ library(rvest)
 library(DBI)
 library(RSQLite)
 
-if (Sys.info()[["nodename"]] == "JUTONG-X1C") {
-  setwd("C:/Users/Jutong/Documents/paddata")
+if (Sys.info()[["sysname"]] == "Windows") {
+  stop("This script cannot be run on Windows.")
 } else if (Sys.info()[["nodename"]] == "jpan-personal") {
   setwd("/home/jpan/paddata")
 } else {
