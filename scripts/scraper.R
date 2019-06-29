@@ -193,7 +193,7 @@ parseMonData <- function(webpage) {
 
 }
 
-monData.ls <- pblapply(webpage.ls, parseMonData)
+monData.ls <- lapply(webpage.ls, parseMonData)
 
 if (updateMode) {
   monData.ls_old <- readRDS(file = "monData.rds")

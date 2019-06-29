@@ -20,7 +20,9 @@ extractMonIdsToScrape <- function(link) {
 
 vt_link <- c(
   "http://pad.skyozora.com/",
-  "http://pad.skyozora.com/news/%E6%96%B0%E9%99%8D%E8%87%A8%E5%9C%B0%E4%B8%8B%E5%9F%8E%E3%80%8C%E3%82%A8%E3%83%AA%E3%82%B9%E9%99%8D%E8%87%A8%EF%BC%81%E3%80%90%E5%85%A8%E5%B1%9E%E6%80%A7%E5%BF%85%E9%A0%88%E3%80%91%E3%80%8D%E7%99%BB%E5%A0%B4!!"
+  "http://pad.skyozora.com/news/%EF%BC%8806/28%E5%AF%A6%E8%A3%9D%EF%BC%89%E9%83%A8%E4%BB%BD%E5%90%88%E4%BD%9C%E8%A7%92%E8%89%B2PowerUp%EF%BC%88%E4%B8%BB%E5%8B%95%E6%8A%80%EF%BC%86%E9%9A%8A%E9%95%B7%E6%8A%80%EF%BC%89",
+  "http://pad.skyozora.com/news/%EF%BC%8806/28%E5%AF%A6%E8%A3%9D%EF%BC%89%E9%83%A8%E4%BB%BD%E5%90%88%E4%BD%9C%E8%A7%92%E8%89%B2PowerUp%EF%BC%88%E6%95%B8%E5%80%BC%EF%BC%86%E8%B6%85%E8%A6%BA%E9%86%92%EF%BC%89",
+  "http://pad.skyozora.com/news/%EF%BC%8806/28%E5%AF%A6%E8%A3%9D%EF%BC%89%E9%83%A8%E4%BB%BD%E5%90%88%E4%BD%9C%E8%A7%92%E8%89%B2PowerUp%EF%BC%88%E8%A6%BA%E9%86%92%E6%8A%80%EF%BC%89"
 )
 
 id.vt <- unique(unlist(sapply(vt_link, extractMonIdsToScrape), use.names = F))
