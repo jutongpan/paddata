@@ -10,6 +10,8 @@ if (Sys.info()[["nodename"]] == "JUTONG-X1C") {
   setwd("/home/jpan/paddata")
 }
 
+options(HTTPUserAgent = "R (3.5.2 x86_64-pc-linux-gnu x86_64 linux-gnu)")
+
 extractMonIdsToScrape <- function(link) {
   webpage <- read_html(link)
   hrefs <- html_nodes(webpage, "a") %>% html_attr("href")
