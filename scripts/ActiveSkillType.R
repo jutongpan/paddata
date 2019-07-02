@@ -23,7 +23,7 @@ webnodes2 <- html_nodes(webpage, 'table')
 ActiveSkillTable.ls <- as.list(html_text(webnodes1))
 ActiveSkillTable.dt <- data.table(ActiveSkillTable.ls)
 ActiveSkillContent.ls_ <- lapply(webnodes2, function(x) html_text(html_nodes(x, "tr td")))
-# ActiveSkillContent.ls_ <- ActiveSkillContent.ls_[4:(length(ActiveSkillContent.ls_ )-1)]
+ActiveSkillContent.ls_ <- ActiveSkillContent.ls_[4:(length(ActiveSkillContent.ls_ )-1)]
 
 
 wide <- function(x){
