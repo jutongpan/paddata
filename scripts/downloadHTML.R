@@ -21,7 +21,8 @@ extractMonIdsToScrape <- function(link) {
 }
 
 vt_link <- c(
-  "http://pad.skyozora.com/"
+  "http://pad.skyozora.com/",
+  "http://pad.skyozora.com/news/%EF%BC%8807/12%E5%AF%A6%E8%A3%9D%EF%BC%89%E9%83%A8%E4%BB%BD%E5%AF%B5%E7%89%A9%E7%A9%B6%E6%A5%B5%E9%80%B2%E5%8C%96%EF%BC%86%E8%83%BD%E5%8A%9B%E8%AA%BF%E6%95%B4%EF%BC%81"
 )
 
 id.vt <- unique(unlist(sapply(vt_link, extractMonIdsToScrape), use.names = F))
