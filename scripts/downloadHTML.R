@@ -5,7 +5,7 @@ library(stringr)
 if (Sys.info()[["nodename"]] == "JUTONG-X1C") {
   setwd("C:/Users/Jutong/Documents/paddata")
 } else if (Sys.info()[["nodename"]] == "MU-JPAN") {
-  setwd("C:/Users/JPan/Documents/repo/paddata")
+  setwd("C:/Users/JPan/Documents/repos/paddata")
 } else if (Sys.info()[["nodename"]] == "jpan-personal") {
   setwd("/home/jpan/paddata")
 }
