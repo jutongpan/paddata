@@ -23,21 +23,25 @@ webnodes <- html_nodes(webpage, '.tooltip')
 AwokenSkillName <- sapply(webnodes, function(x) xml_attr(x, "title"))
 AwokenSkillIconDownload <- sapply(webnodes, function(x) xml_attr(xml_child(x), "src"))
 
-AwokenSkillName.dt <- data.table(AwokenSkillName)
-AwokenSkillIconDownload.dt <- data.table(AwokenSkillIconDownload)
-
-AwokenSkill.dt <- cbind(AwokenSkillName.dt, AwokenSkillIconDownload.dt)
-AwokenSkill.dt <- AwokenSkill.dt[-1,]
-AwokenSkill.dt[ , AwokenSkillId := 1:nrow(AwokenSkill.dt)]
-
-# for(i in 1:length(AwokenSkill.dt$AwokenSkillIconDownload)){
-# download.file(paste0(AwokenSkill.dt$AwokenSkillIconDownload[i]),
-#               paste0("app/img/AwokenSkill/", AwokenSkill.dt[i,AwokenSkillId], ".png"))
-# }
-
+AwokenSkill.dt <- data.table(
+  AwokenSkillName = AwokenSkillName,
+  AwokenSkillIconDownload = AwokenSkillIconDownload
+)
+AwokenSkill.dt <- AwokenSkill.dt[-1, ]
+AwokenSkill.dt[ , AwokenSkillId := .I]
 
 ## 2. Write the data into database
 conn <- dbConnect(drv = RSQLite::SQLite(), "padmonster.sqlite3")
 dbExecute(conn, "DELETE FROM AwokenSkill")
 dbWriteTable(conn, "AwokenSkill", AwokenSkill.dt, append = TRUE)
 dbDisconnect(conn)
+
+## 3. Download Awoken Skill icons 
+for (i in 1:nrow(AwokenSkill.dt)) {
+  if (file.exists(paste0("img/AwokenSkill/", i, ".png")) == FALSE) {
+    download.file(
+      AwokenSkill.dt$AwokenSkillIconDownload[i],
+      paste0("img/AwokenSkill/", AwokenSkill.dt[i, AwokenSkillId], ".png")
+    )
+  }
+}
