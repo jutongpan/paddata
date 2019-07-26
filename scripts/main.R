@@ -1,3 +1,5 @@
+rm(list=ls())
+
 if (Sys.info()[["nodename"]] == "JUTONG-X1C") {
   setwd("C:/Users/Jutong/Documents/paddata")
 } else if (Sys.info()[["nodename"]] == "MU-JPAN") {
