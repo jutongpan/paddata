@@ -21,12 +21,13 @@ extractMonIdsToScrape <- function(link) {
 }
 
 vt_link <- c(
-  "http://pad.skyozora.com/",
-  "http://pad.skyozora.com/news/%EF%BC%8808/23%E5%AF%A6%E8%A3%9D%EF%BC%89%E9%83%A8%E4%BB%BD%E8%A7%92%E8%89%B2%E8%83%BD%E5%8A%9B%E8%AA%BF%E6%95%B4%EF%BC%81",
-  "http://pad.skyozora.com/news/%EF%BC%8808/23%E5%AF%A6%E8%A3%9D%EF%BC%89%E9%83%A8%E4%BB%BD%E5%90%88%E4%BD%9C%E8%A7%92%E8%89%B2%E8%BF%BD%E5%8A%A0%E9%80%B2%E5%8C%96%E5%BD%A2%E6%85%8B%EF%BC%86%E8%83%BD%E5%8A%9B%E8%AA%BF%E6%95%B4%EF%BC%81"
+  # "http://pad.skyozora.com/",
+  "http://pad.skyozora.com/news/%EF%BC%8808/23%E5%AF%A6%E8%A3%9D%EF%BC%89%E9%83%A8%E4%BB%BD%E8%A7%92%E8%89%B2%E8%83%BD%E5%8A%9B%E8%AA%BF%E6%95%B4%EF%BC%81"
 )
 
 id.vt <- unique(unlist(sapply(vt_link, extractMonIdsToScrape), use.names = F))
+
+id.vt <- c(id.vt, 5525, 5528, 5529)
 
 index <- 1
 while (index <= length(id.vt)) {
