@@ -12,6 +12,8 @@ if (Sys.info()[["sysname"]] == "Windows") {
   setwd("//Users/yawenliang/Documents/paddata")
 }
 
+source("scripts/functions.R")
+
 # Get active skill type list
 
 url <- 'http://pad.skyozora.com/skill/%E4%B8%BB%E5%8B%95%E6%8A%80%E8%83%BD%E4%B8%80%E8%A6%BD/'

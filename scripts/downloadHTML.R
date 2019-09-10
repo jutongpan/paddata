@@ -10,6 +10,8 @@ if (Sys.info()[["nodename"]] == "JUTONG-X1C") {
   setwd("/home/jpan/paddata")
 }
 
+source("scripts/functions.R")
+
 extractMonIdsToScrape <- function(link) {
   webpage <- readHtmlIgnoreSSL(link, device = "desktop")
   hrefs <- html_nodes(webpage, "a") %>% html_attr("href")
@@ -25,13 +27,18 @@ vt_link <- c(
 
 id.vt <- unique(unlist(sapply(vt_link, extractMonIdsToScrape), use.names = F))
 
-id.vt <- c(id.vt, 5525, 5528, 5529)
-
 index <- 1
 while (index <= length(id.vt)) {
   tryCatch(
     {
-      download.file(paste0("http://pad.skyozora.com/pets/", id.vt[index]), paste0("raw/", id.vt[index], ".html"))
+      writeLines(
+        text = RCurl::getURL(
+          url = paste0("https://pad.skyozora.com/pets/", id.vt[index]),
+          ssl.verifypeer = FALSE
+        ),
+        con = paste0("raw/", id.vt[index], ".html")
+      )
+      cat(id.vt[index], "/n")
       if (index %% 100 == 0) Sys.sleep(30)
       if (index %% 10 == 0) Sys.sleep(3)
       index <- index + 1
