@@ -10,10 +10,8 @@ if (Sys.info()[["nodename"]] == "JUTONG-X1C") {
   setwd("/home/jpan/paddata")
 }
 
-options(HTTPUserAgent = "R (3.5.2 x86_64-pc-linux-gnu x86_64 linux-gnu)")
-
 extractMonIdsToScrape <- function(link) {
-  webpage <- read_html(link)
+  webpage <- readHtmlIgnoreSSL(link, device = "desktop")
   hrefs <- html_nodes(webpage, "a") %>% html_attr("href")
   hrefs_pets <- str_match(string = hrefs, pattern = "^pets/([0-9]{3,4})$")[,2]
   vt_id <- as.integer(hrefs_pets[!is.na(hrefs_pets)])
@@ -22,7 +20,7 @@ extractMonIdsToScrape <- function(link) {
 
 vt_link <- c(
   # "http://pad.skyozora.com/",
-  "http://pad.skyozora.com/news/%EF%BC%8808/23%E5%AF%A6%E8%A3%9D%EF%BC%89%E9%83%A8%E4%BB%BD%E8%A7%92%E8%89%B2%E8%83%BD%E5%8A%9B%E8%AA%BF%E6%95%B4%EF%BC%81"
+  "https://pad.skyozora.com/news/%EF%BC%8809/09%E5%AF%A6%E8%A3%9D%EF%BC%89%E9%83%A8%E4%BB%BD%E5%AF%B5%E7%89%A9%E8%BF%BD%E5%8A%A0%E9%80%B2%E5%8C%96%E5%BD%A2%E6%85%8B%EF%BC%86%E8%83%BD%E5%8A%9B%E8%AA%BF%E6%95%B4%EF%BC%81"
 )
 
 id.vt <- unique(unlist(sapply(vt_link, extractMonIdsToScrape), use.names = F))

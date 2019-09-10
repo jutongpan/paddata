@@ -15,7 +15,7 @@ if (Sys.info()[["sysname"]] == "Windows") {
 # Get active skill type list
 
 url <- 'http://pad.skyozora.com/skill/%E4%B8%BB%E5%8B%95%E6%8A%80%E8%83%BD%E4%B8%80%E8%A6%BD/'
-webpage <- read_html(url)
+webpage <- readHtmlIgnoreSSL(url, device = "desktop")
 # webpage <- read_html("raw/ActiveSkillType.html")
 webnodes1 <- html_nodes(webpage, 'h3')
 webnodes2 <- html_nodes(webpage, 'table')
