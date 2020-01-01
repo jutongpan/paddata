@@ -22,14 +22,16 @@ extractMonIdsToScrape <- function(link) {
 
 vt_link <- c(
   "http://pad.skyozora.com/",
-  "https://pad.skyozora.com/news/（12/10實裝）部份寵物追加進化形態＆能力調整！"
+  "https://pad.skyozora.com/news/（12/12實裝）部份合作角色追加進化形態＆能力調整！",
+  "https://pad.skyozora.com/news/（12/26實裝）部份寵物追加進化形態＆能力調整！",
+  "https://pad.skyozora.com/news/（12/26實裝）部份正月版寵物追加進化形態＆能力調整！"
 )
 
 id.vt <- unique(unlist(sapply(vt_link, extractMonIdsToScrape), use.names = F))
 
 id.vt <- union(
   id.vt,
-  c(5733, 5734, 5736:5739, 5751:5754, 5770)
+  5819:5840
 )
 
 index <- 1

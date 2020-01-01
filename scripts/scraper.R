@@ -152,6 +152,8 @@ parseMonData <- function(webpage) {
   hrefs <- webpage %>% html_nodes("link") %>% html_attr("href")
   # MonsterIconDownload <- hrefs[grepl("i1296.photobucket.com/albums/ag18/skyozora/pets_icon", hrefs)]
   MonsterIconDownload <- hrefs[4]
+  ## Added on 2020-01-01. Icon is stored on host instead of photobucket
+  MonsterIconDownload <- paste0("https://pad.skyozora.com/", MonsterIconDownload)
 
   evoTargets <- webpage %>% html_nodes(".EvoTarget") %>% html_attr("href")
   if (length(evoTargets) == 0) {
